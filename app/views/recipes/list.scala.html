@@ -1,0 +1,25 @@
+@(recipes: List[Recipe])
+
+@main("Recipe list") {
+
+    <h2>All recipes</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr> <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(recipe <- recipes) {
+            <tr>
+                <td>
+                    Blub
+                </td>
+                <td>
+                    Blub
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
