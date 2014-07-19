@@ -15,9 +15,6 @@ import javax.persistence.ManyToMany;
 public class Produce extends Model{
 
     @Id
-    @GeneratedValue
-    public Long id;
-
     public final String name;
 
     public Produce(final String name) {
