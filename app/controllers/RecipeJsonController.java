@@ -1,35 +1,38 @@
 package controllers;
 
-import com.google.gson.GsonBuilder;
-import models.Recipe;
-import play.mvc.BodyParser;
+import models.recipes.Recipe;
+import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import static play.libs.Json.toJson;
+
+/**
+ * Handles incoming requests for {@link models.recipes.Recipe} and returns JsonObjects
+ */
 public class RecipeJsonController extends Controller {
 
-    /**
-     * Renders list of recipes as html
-     *
-     * @return
-     */
     public static Result list() {
         final List<Recipe> productList = Recipe.findAll();
-
-        return ok(new GsonBuilder().create().toJson(productList));
+        return ok(toJson(productList));
     }
 
-    public static Result newProduct() {
+    public static Result details(final Long id) {
         return TODO;
     }
 
-    public static Result details(final String ean) {
+    public static Result details(final String name) {
         return TODO;
     }
 
-    @BodyParser.Of(BodyParser.Json.class)
+    public static Result list(final String keywords) {
+        return TODO;
+    }
+
+    // @BodyParser.Of()
     public static Result save() {
         return TODO;
     }

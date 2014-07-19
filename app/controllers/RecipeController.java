@@ -1,6 +1,6 @@
 package controllers;
 
-import models.Recipe;
+import models.recipes.Recipe;
 import play.mvc.Controller;
 import play.mvc.Result;
 

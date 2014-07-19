@@ -11,7 +11,8 @@ object ApplicationBuild extends Build {
 
     val appDependencies = Seq(
       // Add your project dependencies here,
-      "com.google.code.gson" % "gson" % "2.2"
+      "com.google.code.gson" % "gson" % "2.2",
+      "mysql" % "mysql-connector-java" % "5.+"
     )
     val main = Project(appName, file(".")).enablePlugins(play.PlayJava).settings(
         playVersion := appVersion,

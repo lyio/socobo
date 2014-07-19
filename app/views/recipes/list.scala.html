@@ -1,4 +1,4 @@
-@(recipes: List[Recipe])
+@(recipes: List[models.recipes.Recipe])
 
 @main("Recipe list") {
 
@@ -13,10 +13,10 @@
         @for(recipe <- recipes) {
             <tr>
                 <td>
-                    Blub
+                    @recipe.id
                 </td>
                 <td>
-                    Blub
+                    @recipe.name
                 </td>
             </tr>
         }

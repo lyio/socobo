@@ -1,4 +1,4 @@
-import models.Recipe;
+import models.recipes.Recipe;
 import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
