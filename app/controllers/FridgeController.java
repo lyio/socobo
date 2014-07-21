@@ -3,9 +3,6 @@ package controllers;
 
 import models.fridge.Fridge;
 import models.produce.Produce;
-import models.recipes.Recipe;
-import models.user.User;
-import play.api.mvc.Call;
 import play.db.ebean.Model;
 import play.mvc.Result;
 
@@ -28,8 +25,16 @@ public class FridgeController {
      * @return
      */
     public static Result addProduce() {
-        final List<Produce> produces = Arrays.asList(new Produce("butter"), new Produce("nuts"), new Produce("lentils"));
-        produces.forEach(Model::save);
+        final List<Produce> produces = Arrays.asList(new Produce("butter"), new Produce("nuts"), new Produce("lentils"),
+                new Produce("cocoa"), new Produce("milk"), new Produce("flour"));
+        Model.Finder<String, Produce> finder = new Model.Finder<String, Produce>(String.class, Produce.class);
+        produces.forEach(p -> {
+            if (finder.byId(p.name) == null) {
+                p.save();
+            }
+        });
+
+
 
         return redirect(routes.FridgeController.listProduce());
     }
