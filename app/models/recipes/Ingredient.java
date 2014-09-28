@@ -1,22 +1,21 @@
 package models.recipes;
 
 import models.produce.Produce;
-import play.db.ebean.Model;
 
 import javax.persistence.*;
 
 @Entity
-public class Ingredient extends Model {
+public class Ingredient {
 
     @Id
     @GeneratedValue
     public Long id;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    public final Produce product;
+    @ManyToOne
+    public Produce product;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    public final Amount amount;
+    @ManyToOne
+    public Amount amount;
 
     public Ingredient(final Produce product, final Amount amount) {
         this.product = product;

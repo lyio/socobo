@@ -1,15 +1,12 @@
 package models.recipes;
 
 import models.recipes.statics.Statics;
-import play.db.ebean.Model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Entity
-public final class Recipe extends Model {
+public final class Recipe {
 
     @Id
     @GeneratedValue
@@ -28,9 +25,5 @@ public final class Recipe extends Model {
         this.ingredients = ingredients;
         this.instructions = instructions;
         this.category = category;
-    }
-
-    public static List<Recipe> findAll() {
-        return new Model.Finder(Long.class, Recipe.class).all();
     }
 }

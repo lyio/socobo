@@ -7,6 +7,10 @@ import views.html.index;
 
 public class Application extends Controller {
 
+    /**
+     * Main entry point.
+     * @return
+     */
     public static Result index() {
         return ok(index.render("Your new application is ready."));
     }

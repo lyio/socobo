@@ -1,32 +1,28 @@
 package models.fridge;
 
-import models.produce.Produce;
 import models.user.User;
-import play.db.ebean.Model;
-import sun.util.resources.sv.CalendarData_sv;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Fridge extends Model {
+public class Fridge {
 
     @Id
     @GeneratedValue
     public Long id;
 
-    @OneToOne
-    public final User owner;
+    @OneToOne(cascade=CascadeType.ALL)
+    public User user;
 
-    @OneToMany(cascade=CascadeType.ALL)
-    public final List<Item> items;
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    public List<Item> items;
 
-    public Fridge(final User owner, final List<Item> items) {
-        this.owner = owner;
-        this.items = items;
+    public Fridge() {
     }
 
-    public static Fridge findForUser(final Long userId) {
-        return (Fridge) new Finder(Long.class, Fridge.class).byId(userId);
+    public Fridge(final User user, final List<Item> items) {
+        this.user = user;
+        this.items = items;
     }
 }

@@ -3,10 +3,7 @@ package models.fridge;
 import models.produce.Produce;
 import models.recipes.statics.Statics;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.util.Locale;
+import javax.persistence.*;
 
 /**
  * Resource representing the meta-data for the relationship between a {@link models.produce.Produce} and
@@ -15,15 +12,19 @@ import java.util.Locale;
 @Entity
 public class Item {
 
-    public final Produce produce;
-
     @Id
     @GeneratedValue
     public Long id;
 
-    public final int amount;
+    public int amount;
 
-    public final Statics.UNIT unit;
+    public Statics.UNIT unit;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    public Produce produce;
+
+    public Item() {
+    }
 
     public Item(Produce produce, int amount, Statics.UNIT unit) {
         this.produce = produce;

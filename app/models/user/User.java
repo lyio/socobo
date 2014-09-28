@@ -1,25 +1,30 @@
 package models.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.fridge.Fridge;
-import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
+import javax.inject.Inject;
+import javax.persistence.*;
 
 @Entity
-public class User extends Model{
+public class User {
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    public Fridge fridge;
+
+    public String name;
 
     @Id
-    @GeneratedValue
-    public Long id;
+    public String userName;
 
-    @OneToOne
-    public final Fridge fridge;
+    @JsonIgnore
+    public String password;
 
-    public User(final Fridge fridge) {
-        this.fridge = fridge;
+    public User(String name) {
+        this.name = name;
+    }
+
+    public User() {
     }
 }

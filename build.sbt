@@ -4,8 +4,10 @@ version := "1.0-SNAPSHOT"
 
 scalaVersion := "2.11.1"
 
+pipelineStages := Seq(gzip)
+
 libraryDependencies ++= Seq(
-  javaJdbc,
-  javaEbean,
-  cache
+  cache,
+  javaCore,
+  javaJpa
 )

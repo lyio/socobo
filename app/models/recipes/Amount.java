@@ -1,14 +1,13 @@
 package models.recipes;
 
 import models.recipes.statics.Statics;
-import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Amount extends Model {
+public class Amount {
 
     @Id
     @GeneratedValue
@@ -16,7 +15,7 @@ public class Amount extends Model {
 
     public final int amount;
 
-    public final Statics.UNIT unit;
+    public Statics.UNIT unit;
 
     public Amount(int amount, Statics.UNIT unit) {
         this.amount = amount;

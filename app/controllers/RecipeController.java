@@ -13,8 +13,7 @@ public class RecipeController extends Controller {
      * @return
      */
     public static Result list() {
-        final List<Recipe> productList = Recipe.findAll();
-        return ok(views.html.recipes.list.render(productList));
+        return TODO;
     }
 
     public static Result newProduct() {

@@ -1,45 +1,87 @@
 package controllers;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import models.fridge.Fridge;
+import models.fridge.FridgeRepository;
+import models.fridge.Item;
 import models.produce.Produce;
-import play.db.ebean.Model;
+import models.produce.ProduceRepository;
+import models.recipes.statics.Statics;
+import models.user.User;
+import models.user.UserRepository;
+import play.mvc.BodyParser;
+import play.mvc.Controller;
 import play.mvc.Result;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static play.libs.Json.fromJson;
 import static play.libs.Json.toJson;
-import static play.mvc.Results.notFound;
-import static play.mvc.Results.ok;
-import static play.mvc.Results.redirect;
 
-public class FridgeController {
-    public static Result fridge(final String userId) {
-        final Fridge fridge = Fridge.findForUser(Long.valueOf(userId));
+@Named
+@Singleton
+public class FridgeController extends Controller {
+
+    private final FridgeRepository fridgeRepository;
+
+    private final UserRepository userRepository;
+
+    private final ProduceRepository produceRepository;
+
+    @Inject
+    public FridgeController(FridgeRepository fridgeRepository, UserRepository userRepository, ProduceRepository produceRepository) {
+        this.fridgeRepository = fridgeRepository;
+        this.userRepository = userRepository;
+        this.produceRepository = produceRepository;
+    }
+
+    public Result fridge(final String userName) {
+        final Fridge fridge = fridgeRepository.findByUserUserName(userName);
         return fridge != null ? ok(toJson(fridge)) : notFound("No fridge found for this user");
+    }
+
+    @BodyParser.Of(BodyParser.Json.class)
+    public Result add(final String userName) {
+        final Fridge fridge = fridgeRepository.findByUserUserName(userName);
+        final JsonNode node = request().body().asJson();
+        final Item item = fromJson(node, Item.class);
+
+        fridge.items.add(item);
+        fridgeRepository.save(fridge);
+
+        return redirect(routes.FridgeController.fridge(userName));
     }
 
     /**
      * Development way to add some data
+     *
      * @return
      */
-    public static Result addProduce() {
+    public Result addProduce() {
         final List<Produce> produces = Arrays.asList(new Produce("butter"), new Produce("nuts"), new Produce("lentils"),
                 new Produce("cocoa"), new Produce("milk"), new Produce("flour"));
-        Model.Finder<String, Produce> finder = new Model.Finder<String, Produce>(String.class, Produce.class);
         produces.forEach(p -> {
-            if (finder.byId(p.name) == null) {
-                p.save();
-            }
+            produceRepository.save(p);
         });
-
-
-
-        return redirect(routes.FridgeController.listProduce());
+        final List<Item> items = Arrays.asList(new Item(produces.get(0), 50, Statics.UNIT.GRAM), new Item(produces.get(1), 20, Statics.UNIT.GRAM));
+        final Fridge f = new Fridge();
+        f.items = items;
+        f.user = userRepository.findByUserName("guillaume");
+        if (f.user == null) {
+            f.user = new User();
+            f.user.userName = "guillaume";
+        }
+        fridgeRepository.save(f);
+        return redirect(routes.FridgeController.fridge("guillaume"));
     }
 
-    public static Result listProduce() {
-        return ok(toJson(new Model.Finder(Long.class, Produce.class).all()));
+    public Result listProduce() {
+        return ok(toJson(produceRepository.findAll()));
     }
 }

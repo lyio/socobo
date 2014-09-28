@@ -16,8 +16,8 @@ import static play.libs.Json.toJson;
 public class RecipeJsonController extends Controller {
 
     public static Result list() {
-        final List<Recipe> productList = Recipe.findAll();
-        return ok(toJson(productList));
+        final List<Recipe> productList;
+        return TODO;
     }
 
     public static Result details(final Long id) {
