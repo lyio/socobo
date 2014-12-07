@@ -6,17 +6,18 @@
 GET        /                    controllers.Application.index()
 
 # recipes page
-GET        /recipes            controllers.RecipeController.list()
-GET        /json/recipes       controllers.RecipeJsonController.list()
+GET      /api/v1/recipes            controllers.RecipeController.list()
+GET      /api/v1/json/recipes       controllers.RecipeJsonController.list()
 
 # @controllers notation works with non-static controllers
-GET       /:userId/fridge      @controllers.FridgeController.fridge(userId)
-POST      /:userId/fridge/add  @controllers.FridgeController.add(userId)
+GET       /api/v1/:userId/fridge      @controllers.FridgeController.fridge(userId)
+POST      /api/v1/:userId/fridge/add  @controllers.FridgeController.add(userId)
 
-POST      /user/new            @controllers.UserController.createUser()
+GET       /api/v1/user/:userName        @controllers.UserController.details(userName)
+POST      /api/v1/user/new            @controllers.UserController.createUser()
 
-GET       /dev/produce          @controllers.FridgeController.addProduce()
-GET       /produce              @controllers.FridgeController.listProduce()
+GET       /api/v1/dev/produce          @controllers.FridgeController.addProduce()
+GET       /api/v1/produce              @controllers.FridgeController.listProduce()
 
 # Map static resources from the /public folder to the /assets URL path
 GET        /assets/*file        controllers.Assets.at(path="/public", file)

@@ -1,19 +1,17 @@
 package controllers;
 
+import biz.UserCreator;
 import com.fasterxml.jackson.databind.JsonNode;
-import models.fridge.Fridge;
-import models.fridge.Item;
 import models.user.User;
 import models.user.UserRepository;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
-
-import java.util.ArrayList;
 
 import static play.libs.Json.fromJson;
 import static play.libs.Json.toJson;
@@ -22,10 +20,13 @@ import static play.libs.Json.toJson;
 @Singleton
 public class UserController extends Controller {
 
+    private final UserCreator userCreator;
+
     private final UserRepository userRepository;
 
     @Inject
-    public UserController(UserRepository userRepository) {
+    public UserController(final UserCreator userCreator, final UserRepository userRepository) {
+        this.userCreator = userCreator;
         this.userRepository = userRepository;
     }
 
@@ -33,9 +34,16 @@ public class UserController extends Controller {
     public Result createUser() {
         final JsonNode node = request().body().asJson();
         final User user = fromJson(node, User.class);
-        user.fridge = new Fridge(user, new ArrayList<Item>());
-        userRepository.save(user);
 
-        return ok(toJson(userRepository.findByUserName(user.userName)));
+        User createdUser = userCreator.createUser(user);
+
+
+        response().setHeader(Http.HeaderNames.LOCATION, routes.UserController.details(createdUser.userName).url());
+        return ok(toJson(createdUser.userName));
+    }
+
+    public Result details(String userId) {
+        final User user = userRepository.findByUserName(userId);
+        return user != null ? ok(toJson(user)) : notFound();
     }
 }
