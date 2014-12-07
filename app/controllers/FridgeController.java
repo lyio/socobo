@@ -17,7 +17,6 @@ import play.mvc.Result;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -66,9 +65,7 @@ public class FridgeController extends Controller {
     public Result addProduce() {
         final List<Produce> produces = Arrays.asList(new Produce("butter"), new Produce("nuts"), new Produce("lentils"),
                 new Produce("cocoa"), new Produce("milk"), new Produce("flour"));
-        produces.forEach(p -> {
-            produceRepository.save(p);
-        });
+        produces.forEach(produceRepository::save);
         final List<Item> items = Arrays.asList(new Item(produces.get(0), 50, Statics.UNIT.GRAM), new Item(produces.get(1), 20, Statics.UNIT.GRAM));
         final Fridge f = new Fridge();
         f.items = items;
