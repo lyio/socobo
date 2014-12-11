@@ -14,7 +14,7 @@ GET       /api/v1/:userId/fridge      @controllers.FridgeController.fridge(userI
 POST      /api/v1/:userId/fridge/add  @controllers.FridgeController.add(userId)
 
 GET       /api/v1/user/:userName        @controllers.UserController.details(userName)
-POST      /api/v1/user/new            @controllers.UserController.createUser()
+POST      /api/v1/user/                 @controllers.UserController.createUser()
 
 GET       /api/v1/dev/produce          @controllers.FridgeController.addProduce()
 GET       /api/v1/produce              @controllers.FridgeController.listProduce()

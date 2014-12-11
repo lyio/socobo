@@ -9,7 +9,7 @@ import models.produce.Produce;
 import models.produce.ProduceRepository;
 import models.recipes.statics.Statics;
 import models.user.User;
-import models.user.UserRepository;
+import models.UserRepository;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;

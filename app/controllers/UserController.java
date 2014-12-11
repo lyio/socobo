@@ -1,9 +1,9 @@
 package controllers;
 
-import biz.UserCreator;
+import biz.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.user.User;
-import models.user.UserRepository;
+import models.UserRepository;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -20,13 +20,13 @@ import static play.libs.Json.toJson;
 @Singleton
 public class UserController extends Controller {
 
-    private final UserCreator userCreator;
+    private final UserService userService;
 
     private final UserRepository userRepository;
 
     @Inject
-    public UserController(final UserCreator userCreator, final UserRepository userRepository) {
-        this.userCreator = userCreator;
+    public UserController(final UserService userService, final UserRepository userRepository) {
+        this.userService = userService;
         this.userRepository = userRepository;
     }
 
@@ -35,11 +35,15 @@ public class UserController extends Controller {
         final JsonNode node = request().body().asJson();
         final User user = fromJson(node, User.class);
 
-        User createdUser = userCreator.createUser(user);
+        User createdUser = userService.createUser(user).get(500);
 
-
-        response().setHeader(Http.HeaderNames.LOCATION, routes.UserController.details(createdUser.userName).url());
-        return ok(toJson(createdUser.userName));
+        if (createdUser != null) {
+            response().setHeader(Http.HeaderNames.LOCATION, routes.UserController.details(createdUser.userName).url());
+            return ok(toJson(createdUser));
+        }
+        else {
+            return internalServerError();
+        }
     }
 
     public Result details(String userId) {

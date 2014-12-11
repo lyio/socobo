@@ -1,7 +1,13 @@
-package models.user;
+package models;
 
+import models.user.User;
 import org.springframework.data.repository.CrudRepository;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
+
+@Named
+@Singleton
 public interface UserRepository extends CrudRepository<User, Long> {
 
     User findByName(String name);

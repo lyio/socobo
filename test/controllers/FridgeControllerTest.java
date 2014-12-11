@@ -5,7 +5,7 @@ import models.fridge.FridgeRepository;
 import models.fridge.Item;
 import models.produce.ProduceRepository;
 import models.user.User;
-import models.user.UserRepository;
+import models.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,14 +1,10 @@
 package controllers;
 
 import models.recipes.Recipe;
-import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static play.libs.Json.toJson;
 
 /**
  * Handles incoming requests for {@link models.recipes.Recipe} and returns JsonObjects

@@ -1,5 +1,6 @@
 package models.fridge;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import models.user.User;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ public class Fridge {
     public Long id;
 
     @OneToOne(cascade=CascadeType.ALL)
+    @JsonBackReference
     public User user;
 
     @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)

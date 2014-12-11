@@ -1,5 +1,6 @@
 import controllers.Application;
 import org.junit.Test;
+import org.springframework.util.Assert;
 import play.mvc.Result;
 import play.twirl.api.Html;
 
@@ -15,12 +16,6 @@ import static play.test.Helpers.contentType;
 public class ApplicationTest {
 
     @Test
-    public void simpleCheck() {
-        int a = 1 + 1;
-        assertThat(a).isEqualTo(4);
-    }
-
-    @Test
     public void renderTemplate() {
         final Html html = views.html.index.render("Your new application is ready.");
         assertThat(contentType(html)).isEqualTo("text/html");
@@ -30,7 +25,6 @@ public class ApplicationTest {
     @Test
     public void indexController() {
         final Result result = Application.index();
-        assertThat(result != null).isEqualTo(true);
+        Assert.notNull(result);
     }
-
 }

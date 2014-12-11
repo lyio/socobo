@@ -3,14 +3,15 @@ package models.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.fridge.Fridge;
 
-import javax.inject.Inject;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JsonIgnore
     public Fridge fridge;
 
     public String name;
