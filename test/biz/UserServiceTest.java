@@ -3,7 +3,7 @@ package biz;
 import models.fridge.FridgeRepository;
 import models.produce.ProduceRepository;
 import models.user.User;
-import models.UserRepository;
+import models.user.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

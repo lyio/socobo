@@ -2,7 +2,7 @@ package biz;
 
 import models.fridge.Fridge;
 import models.user.User;
-import models.UserRepository;
+import models.user.UserRepository;
 import play.libs.F;
 
 import javax.inject.Inject;

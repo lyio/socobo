@@ -1,4 +1,4 @@
-package models;
+package models.user;
 
 import models.user.User;
 import org.springframework.data.repository.CrudRepository;

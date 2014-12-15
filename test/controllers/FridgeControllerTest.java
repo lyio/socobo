@@ -5,7 +5,7 @@ import models.fridge.FridgeRepository;
 import models.fridge.Item;
 import models.produce.ProduceRepository;
 import models.user.User;
-import models.UserRepository;
+import models.user.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,7 +70,6 @@ public class FridgeControllerTest {
     public void fridge_Should_Produce_Correct_Json() throws Exception {
         final Result fridgeResult = fridgeController.fridge(testUser);
         assertThat(contentAsString(fridgeResult)).contains("id");
-        assertThat(contentAsString(fridgeResult)).contains("user");
         assertThat(contentAsString(fridgeResult)).contains("items");
     }
 }

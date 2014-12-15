@@ -3,7 +3,7 @@ package controllers;
 import biz.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.user.User;
-import models.UserRepository;
+import models.user.UserRepository;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Http;

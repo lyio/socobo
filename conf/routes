@@ -3,15 +3,16 @@
 # ~~~~
 
 # Home page
-GET        /                    controllers.Application.index()
+GET        /                    controllers.Assets.at(path="/public", file="index.html")
 
 # recipes page
 GET      /api/v1/recipes            controllers.RecipeController.list()
 GET      /api/v1/json/recipes       controllers.RecipeJsonController.list()
 
 # @controllers notation works with non-static controllers
-GET       /api/v1/:userId/fridge      @controllers.FridgeController.fridge(userId)
-POST      /api/v1/:userId/fridge/add  @controllers.FridgeController.add(userId)
+GET       /api/v1/:userId/fridge            @controllers.FridgeController.fridge(userId)
+POST      /api/v1/:userId/fridge            @controllers.FridgeController.add(userId)
+GET       /api/v1/:userId/fridge/items/:id  @controllers.FridgeController.showItem(userId, id)
 
 GET       /api/v1/user/:userName        @controllers.UserController.details(userName)
 POST      /api/v1/user/                 @controllers.UserController.createUser()
@@ -21,3 +22,5 @@ GET       /api/v1/produce              @controllers.FridgeController.listProduce
 
 # Map static resources from the /public folder to the /assets URL path
 GET        /assets/*file        controllers.Assets.at(path="/public", file)
+
+OPTIONS /api/v1/*path                           controllers.Application.preflight(path)

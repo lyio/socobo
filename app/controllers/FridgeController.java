@@ -9,7 +9,7 @@ import models.produce.Produce;
 import models.produce.ProduceRepository;
 import models.recipes.statics.Statics;
 import models.user.User;
-import models.UserRepository;
+import models.user.UserRepository;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -40,6 +40,10 @@ public class FridgeController extends Controller {
         this.produceRepository = produceRepository;
     }
 
+    public Result showItem(String userId, String id) {
+        return play.mvc.Results.TODO;
+    }
+
     public Result fridge(final String userName) {
         final Fridge fridge = fridgeRepository.findByUserUserName(userName);
         return fridge != null ? ok(toJson(fridge)) : notFound("No fridge found for this user");
@@ -48,13 +52,16 @@ public class FridgeController extends Controller {
     @BodyParser.Of(BodyParser.Json.class)
     public Result add(final String userName) {
         final Fridge fridge = fridgeRepository.findByUserUserName(userName);
+        if (fridge == null) return notFound("No fridge found for this user");
+        System.out.println(request().body());
         final JsonNode node = request().body().asJson();
+        if (node == null) return badRequest("received non-valid json");
         final Item item = fromJson(node, Item.class);
 
         fridge.items.add(item);
         fridgeRepository.save(fridge);
 
-        return redirect(routes.FridgeController.fridge(userName));
+        return created();
     }
 
     /**
