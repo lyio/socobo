@@ -50,7 +50,7 @@ public class UserServiceTest {
     @Test
     public void testCreateUser_Calls_FindByUserName_Once() throws Exception {
         serviceUnderTest.createUser(testUser);
-        verify(userRepository, times(1)).findByUserName(Matchers.eq(testUser.userName));
+        verify(userRepository, times(2)).findByUserName(Matchers.eq(testUser.userName));
     }
 
     @Test
