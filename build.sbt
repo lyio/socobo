@@ -11,3 +11,5 @@ libraryDependencies ++= Seq(
   javaCore,
   javaJpa
 )
+
+com.etsy.sbt.Checkstyle.checkstyleSettings

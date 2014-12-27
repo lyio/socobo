@@ -9,3 +9,6 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.3.1")
 
 // Use the Typesafe Gzip plugin
 addSbtPlugin("com.typesafe.sbt" % "sbt-gzip" % "1.0.0")
+
+// Etsy stylecheck
+addSbtPlugin("com.etsy" % "sbt-checkstyle-plugin" % "0.4.1")
