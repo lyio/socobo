@@ -1,4 +1,3 @@
-import play.Play.autoImport._
 import play.PlayImport.PlayKeys._
 import sbt.Keys._
 import sbt._
@@ -17,7 +16,8 @@ object ApplicationBuild extends Build {
     "org.springframework" % "spring-expression" % "3.2.2.RELEASE",
     "org.hibernate" % "hibernate-entitymanager" % "3.6.10.Final",
     "org.mockito" % "mockito-core" % "1.9.5" % "test",
-    "org.webjars" % "bootstrap" % "3.0.0"
+    "org.webjars" % "bootstrap" % "3.0.0",
+    "org.webjars" % "angularjs" % "1.3.8"
   )
   val main = Project(appName, file(".")).enablePlugins(play.PlayJava).settings(
     playVersion := appVersion,
