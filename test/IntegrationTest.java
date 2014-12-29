@@ -16,7 +16,7 @@ public class IntegrationTest {
     public void test() {
         running(testServer(9001, fakeApplication(inMemoryDatabase())), HTMLUNIT, browser -> {
             browser.goTo("http://localhost:9001");
-            assertThat(browser.pageSource()).contains("Your new application is ready.");
+            assertThat(browser.pageSource()).contains("html");
         });
     }
 
