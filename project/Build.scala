@@ -10,7 +10,7 @@ object ApplicationBuild extends Build {
 
   val appDependencies = Seq(
     // Add your project dependencies here,
-    "mysql" % "mysql-connector-java" % "5.+",
+    "mysql" % "mysql-connector-java" % "5.1.34",
     "org.springframework" % "spring-context" % "3.2.2.RELEASE",
     "javax.inject" % "javax.inject" % "1",
     "org.springframework.data" % "spring-data-jpa" % "1.3.2.RELEASE",
