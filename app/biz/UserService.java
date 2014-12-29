@@ -3,6 +3,8 @@ package biz;
 import models.fridge.Fridge;
 import models.user.User;
 import models.user.UserRepository;
+import org.apache.xerces.impl.dv.util.Base64;
+import org.joda.time.DateTime;
 import play.libs.F;
 
 import javax.inject.Inject;
@@ -13,11 +15,15 @@ import java.util.Optional;
 @Named
 public class UserService {
 
-    private final UserRepository userRepository;
+    private static UserRepository userRepository;
 
     @Inject
-    public UserService(final UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserService(final UserRepository repository) {
+        userRepository = repository;
+    }
+
+    public static User findByAuthToken(String authToken) {
+        return userRepository.findByAuthToken(authToken);
     }
 
     public F.Promise<User> createUser(final User user) {
@@ -26,12 +32,31 @@ public class UserService {
             if (option.isPresent()) {
                 final User validatedUser = option.get();
                 validatedUser.fridge = new Fridge(user, new ArrayList<>());
+                user.setPassword(user.getPassword());
+                user.createdAt = DateTime.now();
                 userRepository.save(validatedUser);
                 return userRepository.findByUserName(validatedUser.userName);
             } else {
-                return null;
+                throw new Exception("Error validating user");
             }
         });
+    }
+
+    public String createTokenForUser(final User u) {
+        final String token = u.createToken();
+        userRepository.save(u);
+        return token;
+    }
+
+    /**
+     * Finds user by looking for email address and password hash
+     *
+     * @param emailAddress
+     * @param password
+     * @return
+     */
+    public User findByEmailAddressAndPassword(String emailAddress, String password) {
+        return userRepository.findByEmailAndShaPassword(emailAddress, Base64.encode(User.getSha512(password)));
     }
 
     private Optional<User> validateUser(final User user) {

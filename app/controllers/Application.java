@@ -1,15 +1,12 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.index;
 
 public class Application extends Controller {
 
     /**
-     * Main entry point.
-     * @return
+     * Handling preflight requests for CORS
      */
     public static Result preflight(String path) {
         response().setHeader("Access-Control-Allow-Origin", "*");
