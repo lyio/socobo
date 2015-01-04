@@ -24,7 +24,7 @@ public class Global extends GlobalSettings {
     /**
      * Declare the application context to be used - a Java annotation based application context requiring no XML.
      */
-    final private AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+    final public AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
 
     /**
      * Sync the context lifecycle with Play's.
@@ -37,7 +37,7 @@ public class Global extends GlobalSettings {
         // can be called multiple times. The reason for doing during startup is so that the Play configuration is
         // entirely available to this application context.
         ctx.register(SpringDataJpaConfiguration.class);
-        ctx.scan("controllers", "models", "biz", "datalayer");
+        ctx.scan("controllers", "models", "biz");
         ctx.refresh();
 
         // This will construct the beans and call any construction lifecycle methods e.g. @PostConstruct
@@ -65,25 +65,25 @@ public class Global extends GlobalSettings {
     }
 
     /**
-     * This configuration establishes Spring Data concerns including those of JPA.
-     */
-    @Configuration
-    @EnableJpaRepositories("models")
-    public static class SpringDataJpaConfiguration {
+ * This configuration establishes Spring Data concerns including those of JPA.
+ */
+@Configuration
+@EnableJpaRepositories("models")
+public static class SpringDataJpaConfiguration {
 
-        @Bean
-        public EntityManagerFactory entityManagerFactory() {
-            return Persistence.createEntityManagerFactory(DEFAULT_PERSISTENCE_UNIT);
-        }
-
-        @Bean
-        public HibernateExceptionTranslator hibernateExceptionTranslator() {
-            return new HibernateExceptionTranslator();
-        }
-
-        @Bean
-        public JpaTransactionManager transactionManager() {
-            return new JpaTransactionManager();
-        }
+    @Bean
+    public EntityManagerFactory entityManagerFactory() {
+        return Persistence.createEntityManagerFactory(DEFAULT_PERSISTENCE_UNIT);
     }
+
+    @Bean
+    public HibernateExceptionTranslator hibernateExceptionTranslator() {
+        return new HibernateExceptionTranslator();
+    }
+
+    @Bean
+    public JpaTransactionManager transactionManager() {
+        return new JpaTransactionManager();
+    }
+}
 }
