@@ -40,7 +40,7 @@ public class UserControllerTest_CreateUser {
         testUser.userName = "l33t";
 
         when(userService.createUser(any(User.class))).thenReturn(F.Promise.promise(() -> testUser));
-        requestBody = "{\"name\": \"Thomas\", \"password\": \"password1\", \"userName\": \"lyio\", \"email\": \"test@test.com\"}";
+        requestBody = "{\"pictureUrl\": \"url://example.com\", \"name\": \"Thomas\", \"password\": \"password1\", \"userName\": \"lyio\", \"email\": \"test@test.com\"}";
         Http.Context.current.set(getMockContext(requestBody));
         controllerUnderTest = new UserController(userService, userRepository);
     }

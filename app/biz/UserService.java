@@ -32,7 +32,7 @@ public class UserService {
             if (option.isPresent()) {
                 final User validatedUser = option.get();
                 validatedUser.fridge = new Fridge(user, new ArrayList<>());
-                user.setPassword(user.getPassword());
+                user.shaPassword = Base64.encode(User.createSha512(user.password));
                 user.createdAt = DateTime.now();
                 userRepository.save(validatedUser);
                 return userRepository.findByUserName(validatedUser.userName);
@@ -56,7 +56,7 @@ public class UserService {
      * @return
      */
     public User findByEmailAddressAndPassword(String emailAddress, String password) {
-        return userRepository.findByEmailAndShaPassword(emailAddress, Base64.encode(User.getSha512(password)));
+        return userRepository.findByEmailAndShaPassword(emailAddress, Base64.encode(User.createSha512(password)));
     }
 
     private Optional<User> validateUser(final User user) {
