@@ -32,8 +32,8 @@ public class UserService {
             if (option.isPresent()) {
                 final User validatedUser = option.get();
                 validatedUser.fridge = new Fridge(user, new ArrayList<>());
-                user.shaPassword = Base64.encode(User.createSha512(user.password));
-                user.createdAt = DateTime.now();
+                validatedUser.shaPassword = Base64.encode(User.createSha512(validatedUser.password));
+                validatedUser.createdAt = DateTime.now().getMillis();
                 userRepository.save(validatedUser);
                 return userRepository.findByUserName(validatedUser.userName);
             } else {

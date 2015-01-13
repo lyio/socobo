@@ -1,14 +1,19 @@
 package models.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import models.fridge.Fridge;
+import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+import org.joda.time.Instant;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -28,12 +33,11 @@ public class User {
     public String shaPassword;
 
     @Column(nullable = false)
-    public DateTime createdAt;
+    public long createdAt;
 
     @Transient
     @Constraints.MinLength(8)
     @Constraints.MaxLength(256)
-    @JsonIgnore
     public String password;
 
     @JsonIgnore
