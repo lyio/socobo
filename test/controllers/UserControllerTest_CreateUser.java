@@ -13,7 +13,6 @@ import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static play.mvc.Http.Status.BAD_REQUEST;
 import static play.mvc.Http.Status.OK;
-import static play.test.Helpers.header;
 import static play.test.Helpers.status;
 
 public class UserControllerTest_CreateUser {

@@ -8,12 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.util.Assert;
 
+import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -38,25 +38,35 @@ public class UserServiceTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         testUser = new User("test");
+        testUser.password = "testPassword";
+
         serviceUnderTest = new UserService(userRepository);
     }
 
     @Test
-    public void testCreateUser_Calls_UserRepository_Once() throws Exception {
-        serviceUnderTest.createUser(testUser);
-        verify(userRepository, times(1)).save(argThat(new UserMatcher()));
+    public void testCreateUser_Calls_Save_of_UserRepository_Once() throws Exception {
+        serviceUnderTest.createUser(testUser).flatMap(u -> {
+            verify(userRepository, times(1)).save(argThat(new UserMatcher()));
+            return null;
+        });
     }
 
     @Test
     public void testCreateUser_Calls_FindByUserName_Once() throws Exception {
-        serviceUnderTest.createUser(testUser);
-        verify(userRepository, times(2)).findByUserName(Matchers.eq(testUser.userName));
+        serviceUnderTest.createUser(testUser).flatMap(u -> {
+                    verify(userRepository, times(2)).findByUserName(anyString());
+                    return null;
+                }
+        );
     }
 
     @Test
     public void testCreateUser_Fails_For_Existing_UserName() throws Exception {
         serviceUnderTest.createUser(testUser);
-        Assert.isNull(serviceUnderTest.createUser(testUser).get(40));
+        serviceUnderTest.createUser(testUser).flatMap(user -> {
+            assertThat(user).isNull();
+            return null;
+        });
 
     }
 

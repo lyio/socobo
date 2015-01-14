@@ -2,7 +2,6 @@ package models.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.fridge.Fridge;
-import org.joda.time.DateTime;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
@@ -28,12 +27,11 @@ public class User {
     public String shaPassword;
 
     @Column(nullable = false)
-    public DateTime createdAt;
+    public long createdAt;
 
     @Transient
     @Constraints.MinLength(8)
     @Constraints.MaxLength(256)
-    @JsonIgnore
     public String password;
 
     @JsonIgnore
