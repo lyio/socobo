@@ -2,6 +2,7 @@ package models.recipes;
 
 import models.recipes.statics.Statics;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,13 +14,13 @@ public class Amount {
     @GeneratedValue
     private Long id;
 
-    public final int amount;
+    @Column(nullable = false)
+    public int amount;
 
+    @Column(nullable = false)
     public Statics.UNIT unit;
 
-    public Amount(int amount, Statics.UNIT unit) {
-        this.amount = amount;
-        this.unit = unit;
+    public Amount() {
     }
 
     @Override

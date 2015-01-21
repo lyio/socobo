@@ -17,9 +17,7 @@ public class Ingredient {
     @ManyToOne
     public Amount amount;
 
-    public Ingredient(final Produce product, final Amount amount) {
-        this.product = product;
-        this.amount = amount;
+    public Ingredient() {
     }
 
     @Override
