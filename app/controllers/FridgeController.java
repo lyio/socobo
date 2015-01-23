@@ -64,27 +64,6 @@ public class FridgeController extends Controller {
         return created();
     }
 
-    /**
-     * Development way to add some data
-     *
-     * @return
-     */
-    public Result addProduce() {
-        final List<Produce> produces = Arrays.asList(new Produce("butter"), new Produce("nuts"), new Produce("lentils"),
-                new Produce("cocoa"), new Produce("milk"), new Produce("flour"));
-        produces.forEach(produceRepository::save);
-        final List<Item> items = Arrays.asList(new Item(produces.get(0), 50, Statics.UNIT.GRAM), new Item(produces.get(1), 20, Statics.UNIT.GRAM));
-        final Fridge f = new Fridge();
-        f.items = items;
-        f.user = userRepository.findByUserName("guillaume");
-        if (f.user == null) {
-            f.user = new User();
-            f.user.userName = "guillaume";
-        }
-        fridgeRepository.save(f);
-        return redirect(routes.FridgeController.fridge("guillaume"));
-    }
-
     public Result listProduce() {
         return ok(toJson(produceRepository.findAll()));
     }
