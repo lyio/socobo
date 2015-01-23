@@ -2,7 +2,7 @@ package controllers;
 
 import biz.UserService;
 import models.user.User;
-import models.user.UserRepository;
+import datalayer.UserRepository;
 import play.data.Form;
 import play.libs.F;
 import play.mvc.Controller;

@@ -3,13 +3,13 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import models.fridge.Fridge;
-import models.fridge.FridgeRepository;
+import datalayer.FridgeRepository;
 import models.fridge.Item;
 import models.produce.Produce;
-import models.produce.ProduceRepository;
+import datalayer.ProduceRepository;
 import models.recipes.statics.Statics;
 import models.user.User;
-import models.user.UserRepository;
+import datalayer.UserRepository;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;

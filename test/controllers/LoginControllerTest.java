@@ -2,7 +2,7 @@ package controllers;
 
 import biz.UserService;
 import models.user.User;
-import models.user.UserRepository;
+import datalayer.UserRepository;
 import org.junit.Test;
 import play.libs.F;
 import play.mvc.Http;
@@ -35,7 +35,7 @@ public class LoginControllerTest {
 
         testUser = new User();
         testUser.name = "Test User";
-        testUser.setPassword("password123!");
+        testUser.password = "password123!";
         testUser.userName = "l33t";
 
         when(authenticator.getUsername(any(Http.Context.class))).thenReturn(null);

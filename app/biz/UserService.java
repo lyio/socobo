@@ -2,7 +2,7 @@ package biz;
 
 import models.fridge.Fridge;
 import models.user.User;
-import models.user.UserRepository;
+import datalayer.UserRepository;
 import org.apache.xerces.impl.dv.util.Base64;
 import org.joda.time.DateTime;
 import play.libs.F;

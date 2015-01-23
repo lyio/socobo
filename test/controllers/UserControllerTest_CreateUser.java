@@ -3,7 +3,7 @@ package controllers;
 import biz.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.user.User;
-import models.user.UserRepository;
+import datalayer.UserRepository;
 import org.junit.Test;
 import play.libs.F;
 import play.mvc.Http;
@@ -35,7 +35,7 @@ public class UserControllerTest_CreateUser {
 
         testUser = new User();
         testUser.name = "Test User";
-        testUser.setPassword("password123!");
+        testUser.password = "password123!";
         testUser.userName = "l33t";
 
         when(userService.createUser(any(User.class))).thenReturn(F.Promise.promise(() -> testUser));

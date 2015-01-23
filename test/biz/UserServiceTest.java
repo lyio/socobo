@@ -1,9 +1,9 @@
 package biz;
 
-import models.fridge.FridgeRepository;
-import models.produce.ProduceRepository;
+import datalayer.FridgeRepository;
+import datalayer.ProduceRepository;
 import models.user.User;
-import models.user.UserRepository;
+import datalayer.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

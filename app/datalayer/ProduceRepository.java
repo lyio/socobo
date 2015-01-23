@@ -1,5 +1,6 @@
-package models.produce;
+package datalayer;
 
+import models.produce.Produce;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.inject.Named;
