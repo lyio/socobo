@@ -1,6 +1,7 @@
 package controllers;
 
 import biz.UserService;
+import models.user.SignUp;
 import models.user.User;
 import models.user.UserRepository;
 import play.data.Form;
@@ -34,14 +35,14 @@ public class UserController extends Controller {
     }
 
     public F.Promise<Result> createUser() {
-        Form<User> userForm = Form.form(User.class).bindFromRequest();
-        if (userForm.hasErrors()) {
-            return F.Promise.promise(() -> badRequest(userForm.errorsAsJson()));
+        Form<SignUp> signUpForm = Form.form(SignUp.class).bindFromRequest();
+        if (signUpForm.hasErrors()) {
+            return F.Promise.promise(() -> badRequest(signUpForm.errorsAsJson()));
         }
 
-        final User user = userForm.get();
+        final SignUp newUser = signUpForm.get();
 
-        return userService.createUser(user).flatMap(u -> {
+        return userService.createUser(newUser).flatMap(u -> {
             if (u != null) {
                 // setting the resource location header as appropriate for REST
                 response().setHeader(Http.HeaderNames.LOCATION, routes.UserController.details(u.userName).url());

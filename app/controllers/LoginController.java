@@ -2,9 +2,9 @@ package controllers;
 
 import biz.UserService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import models.user.Login;
 import models.user.User;
 import play.data.Form;
-import play.data.validation.Constraints;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -68,14 +68,4 @@ public class LoginController extends Controller {
         return redirect("/");
     }
 
-    public static class Login {
-
-        @Constraints.Required
-        @Constraints.Email
-        public String emailAddress;
-
-        @Constraints.Required
-        public String password;
-
-    }
 }

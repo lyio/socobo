@@ -2,6 +2,7 @@ package biz;
 
 import models.fridge.FridgeRepository;
 import models.produce.ProduceRepository;
+import models.user.SignUp;
 import models.user.User;
 import models.user.UserRepository;
 import org.junit.Before;
@@ -30,14 +31,15 @@ public class UserServiceTest {
     @Mock
     ProduceRepository produceRepository;
 
-    User testUser;
+    SignUp testUser;
 
     UserService serviceUnderTest;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        testUser = new User("test");
+        testUser = new SignUp();
+        testUser.userName = "test";
         testUser.password = "testPassword";
 
         serviceUnderTest = new UserService(userRepository);
@@ -70,14 +72,14 @@ public class UserServiceTest {
 
     }
 
-    private class UserMatcher extends ArgumentMatcher<User> {
+    public class UserMatcher extends ArgumentMatcher<User> {
 
         @Override
         public boolean matches(Object argument) {
             boolean matches = false;
             if (argument instanceof User) {
                 final User user = (User) argument;
-                matches = testUser.name.equals(user.name) && user.fridge != null;
+                matches = testUser.userName.equals(user.userName);
             }
             return matches;
         }
