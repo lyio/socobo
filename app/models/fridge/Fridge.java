@@ -14,7 +14,6 @@ public class Fridge {
     public Long id;
 
     @OneToOne(cascade=CascadeType.ALL)
-    @JsonBackReference
     public User user;
 
     @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)

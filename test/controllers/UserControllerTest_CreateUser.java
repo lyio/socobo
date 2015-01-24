@@ -2,6 +2,7 @@ package controllers;
 
 import biz.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import models.user.SignUp;
 import models.user.User;
 import models.user.UserRepository;
 import org.junit.Test;
@@ -35,11 +36,12 @@ public class UserControllerTest_CreateUser {
 
         testUser = new User();
         testUser.name = "Test User";
-        testUser.setPassword("password123!");
+        testUser.shaPassword = "password123!";
         testUser.userName = "l33t";
 
-        when(userService.createUser(any(User.class))).thenReturn(F.Promise.promise(() -> testUser));
-        requestBody = "{\"pictureUrl\": \"url://example.com\", \"name\": \"Thomas\", \"password\": \"password1\", \"userName\": \"lyio\", \"email\": \"test@test.com\"}";
+        when(userService.createUser(any(SignUp.class))).thenReturn(F.Promise.promise(() -> testUser));
+        requestBody = "{\"pictureUrl\": \"url://example.com\", \"name\": \"Thomas\", \"password\": \"password1\", \"passwordRepeat\": \"password1\"," +
+                " \"userName\": \"lyio\", \"email\": \"test@test.com\"}";
         Http.Context.current.set(getMockContext(requestBody));
         controllerUnderTest = new UserController(userService, userRepository);
     }
@@ -47,7 +49,7 @@ public class UserControllerTest_CreateUser {
     @Test
     public void testCreateUserSuccess() throws Exception {
         Result r = controllerUnderTest.createUser().get(500);
-        verify(userService, atLeastOnce()).createUser(any(User.class));
+        verify(userService, atLeastOnce()).createUser(any(SignUp.class));
         assertThat(status(r)).isEqualTo(OK);
         verify(mockResponse, atLeastOnce()).setHeader(eq(Http.HeaderNames.LOCATION), anyString());
     }
