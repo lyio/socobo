@@ -35,7 +35,7 @@ public class LoginControllerTest {
 
         testUser = new User();
         testUser.name = "Test User";
-        testUser.password = "password123!";
+        testUser.shaPassword = "password123!";
         testUser.userName = "l33t";
 
         when(authenticator.getUsername(any(Http.Context.class))).thenReturn(null);

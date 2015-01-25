@@ -13,9 +13,6 @@ import java.util.UUID;
 @Entity
 public class User {
 
-    @OneToOne(cascade = CascadeType.ALL)
-    public Fridge fridge;
-
     public String name;
 
     @Id
@@ -29,11 +26,6 @@ public class User {
     @Column(nullable = false)
     public long createdAt;
 
-    @Transient
-    @Constraints.MinLength(8)
-    @Constraints.MaxLength(256)
-    public String password;
-
     @JsonIgnore
     @Column(length = 64, unique = false, nullable = true)
     public String authToken;
@@ -44,7 +36,6 @@ public class User {
     @Constraints.Email
     public String email;
 
-    @Constraints.Required
     @Column(nullable = false)
     public String pictureUrl;
 

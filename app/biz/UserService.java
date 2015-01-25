@@ -1,6 +1,8 @@
 package biz;
 
 import models.fridge.Fridge;
+import models.recipes.statics.Statics;
+import models.user.SignUp;
 import models.user.User;
 import datalayer.UserRepository;
 import org.apache.xerces.impl.dv.util.Base64;
@@ -31,9 +33,6 @@ public class UserService {
             Optional<User> option = validateUser(user);
             if (option.isPresent()) {
                 final User validatedUser = option.get();
-                validatedUser.fridge = new Fridge(user, new ArrayList<>());
-                validatedUser.shaPassword = Base64.encode(User.createSha512(validatedUser.password));
-                validatedUser.createdAt = DateTime.now().getMillis();
                 userRepository.save(validatedUser);
                 return userRepository.findByUserName(validatedUser.userName);
             } else {
@@ -69,5 +68,15 @@ public class UserService {
 
     private boolean userAlreadyExists(final User user) {
         return userRepository.findByUserName(user.userName) != null;
+    }
+
+    public F.Promise<User> createUser(final SignUp newUser) {
+        final User user = new User();
+        user.userName = newUser.userName;
+        user.email = newUser.email;
+        user.shaPassword = Base64.encode(User.createSha512(newUser.password));
+        user.createdAt = DateTime.now().getMillis();
+        user.pictureUrl = Statics.DEFAULT_IMG_URL;
+        return createUser(user);
     }
 }
