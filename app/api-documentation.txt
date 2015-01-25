@@ -1,0 +1,94 @@
+#########################################################
+##													   ##
+##				  API - Documentation				   ##
+##													   ##
+#########################################################
+
+Goal:		Define needed fields and there names
+Author: 	flashback2k14
+Date: 		25.01.2015
+Version: 	1.0
+
+#########################################################
+##													   ##
+##				  Section - Login					   ##
+##													   ##
+#########################################################
+
+- needed fields:
+	- emailAddress
+	- password
+	
+- return data:
+	- authToken
+	
+- missing return data:
+	- userName
+	- pictureUrl
+
+#########################################################
+##													   ##
+##				  Section - SignUp					   ##
+##													   ##
+#########################################################
+
+- needed fields:
+	- userName
+	- email --> rename to emailAddress to match w/ Login?
+	- password
+	- passwordRepeat
+	
+- return data:
+	- createdAt
+	- userName
+	- name --> why?
+	- email --> rename to emailAddress to match w/ Login?
+	- pictureUrl
+	
+- missing return data:
+
+
+#########################################################
+##													   ##
+##				  Section - Profile					   ##
+##													   ##
+#########################################################
+
+- needed fields:
+	
+	
+- return data:
+	
+	
+- missing return data:
+	
+
+#########################################################
+##													   ##
+##				  Section - Frigde					   ##
+##													   ##
+#########################################################
+
+- needed fields:
+	
+	
+- return data:
+	
+	
+- missing return data:
+	
+
+#########################################################
+##													   ##
+##				  Section - Recipes					   ##
+##													   ##
+#########################################################
+
+- needed fields:
+	
+	
+- return data:
+	
+	
+- missing return data:
+	
