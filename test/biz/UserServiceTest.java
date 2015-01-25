@@ -2,8 +2,9 @@ package biz;
 
 import datalayer.FridgeRepository;
 import datalayer.ProduceRepository;
-import models.user.User;
 import datalayer.UserRepository;
+import models.user.SignUp;
+import models.user.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
