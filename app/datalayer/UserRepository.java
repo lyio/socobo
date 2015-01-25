@@ -1,4 +1,4 @@
-package models.user;
+package datalayer;
 
 import models.user.User;
 import org.springframework.data.repository.CrudRepository;

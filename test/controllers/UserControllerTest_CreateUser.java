@@ -4,7 +4,7 @@ import biz.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.user.SignUp;
 import models.user.User;
-import models.user.UserRepository;
+import datalayer.UserRepository;
 import org.junit.Test;
 import play.libs.F;
 import play.mvc.Http;

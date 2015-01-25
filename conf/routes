@@ -16,7 +16,6 @@ GET            /api/v1/:userId/fridge/items/:id        @controllers.FridgeContro
 
 GET            /api/v1/user/:userName                  @controllers.UserController.details(userName)
 
-GET            /api/v1/dev/produce                     @controllers.FridgeController.addProduce()
 GET            /api/v1/produce                         @controllers.FridgeController.listProduce()
 
 POST           /login                                  @controllers.LoginController.handleLogin()

@@ -2,7 +2,7 @@ package controllers;
 
 import biz.UserService;
 import models.user.User;
-import models.user.UserRepository;
+import datalayer.UserRepository;
 import org.junit.Test;
 import play.libs.F;
 import play.mvc.Http;

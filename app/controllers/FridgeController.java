@@ -3,13 +3,13 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import models.fridge.Fridge;
-import models.fridge.FridgeRepository;
+import datalayer.FridgeRepository;
 import models.fridge.Item;
 import models.produce.Produce;
-import models.produce.ProduceRepository;
+import datalayer.ProduceRepository;
 import models.recipes.statics.Statics;
 import models.user.User;
-import models.user.UserRepository;
+import datalayer.UserRepository;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -62,27 +62,6 @@ public class FridgeController extends Controller {
         fridgeRepository.save(fridge);
 
         return created();
-    }
-
-    /**
-     * Development way to add some data
-     *
-     * @return
-     */
-    public Result addProduce() {
-        final List<Produce> produces = Arrays.asList(new Produce("butter"), new Produce("nuts"), new Produce("lentils"),
-                new Produce("cocoa"), new Produce("milk"), new Produce("flour"));
-        produces.forEach(produceRepository::save);
-        final List<Item> items = Arrays.asList(new Item(produces.get(0), 50, Statics.UNIT.GRAM), new Item(produces.get(1), 20, Statics.UNIT.GRAM));
-        final Fridge f = new Fridge();
-        f.items = items;
-        f.user = userRepository.findByUserName("guillaume");
-        if (f.user == null) {
-            f.user = new User();
-            f.user.userName = "guillaume";
-        }
-        fridgeRepository.save(f);
-        return redirect(routes.FridgeController.fridge("guillaume"));
     }
 
     public Result listProduce() {
