@@ -1,1 +1,1 @@
-web: target/start -Dhttp.port=9000 -Xmx384m -Xss512k -XX:+UseCompressedOops
+web: target/universal/stage/bin/stark-bayou-3525 -Dhttp.port=${PORT} ${JAVA_OPTS}
