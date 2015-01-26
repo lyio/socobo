@@ -19,7 +19,6 @@ GET            /api/v1/user/:userName                  @controllers.UserControll
 GET            /api/v1/produce                         @controllers.FridgeController.listProduce()
 
 POST           /login                                  @controllers.LoginController.handleLogin()
-GET            /login                                  @controllers.LoginController.login()
 POST           /logout                                 @controllers.LoginController.logout()
 
 POST           /signup                               @controllers.UserController.createUser()

@@ -38,7 +38,7 @@ public class LoginController extends Controller {
         final User user = userService.findByEmailAddressAndPassword(login.emailAddress, login.password);
 
         if (user == null) {
-            return unauthorized();
+            return unauthorized("email and password combination not found");
         }
         else {
             String authToken = userService.createTokenForUser(user);
@@ -47,14 +47,6 @@ public class LoginController extends Controller {
             response().setCookie(UserController.AUTH_TOKEN, authToken);
             return ok(authTokenJson);
         }
-    }
-
-    /**
-     * Used to display login form.
-     * @return
-     */
-    public Result login() {
-        return redirect(routes.Assets.at("login.html"));
     }
 
     public static User getUser() {
