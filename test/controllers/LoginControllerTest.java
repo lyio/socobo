@@ -45,12 +45,6 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void testLogin() throws Exception {
-        final Result loginForm = controllerUnderTest.login();
-        assertThat(status(loginForm)).isEqualTo(303);
-    }
-
-    @Test
     public void testLogout_Unauthorized() throws Exception {
         final User mockedUser = mock(User.class);
         final Http.Context mockContext = getMockContext("");
