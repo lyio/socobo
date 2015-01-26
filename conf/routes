@@ -7,7 +7,6 @@ GET            /                                       controllers.Assets.at(pat
 
 # recipes page
 GET            /api/v1/recipes                         controllers.RecipeController.list()
-GET            /api/v1/json/recipes                    controllers.RecipeJsonController.list()
 
 # @controllers notation works with non-static controllers
 GET            /api/v1/:userId/fridge                  @controllers.FridgeController.fridge(userId)
@@ -24,6 +23,6 @@ POST           /logout                                 @controllers.LoginControl
 POST           /signup                               @controllers.UserController.createUser()
 
 # Map static resources from the /public folder to the /assets URL path
-GET            /assets/*file                           controllers.Assets.at(path="/public", file)
+OPTIONS        /api/v1/:path                           controllers.Application.preflight(path)
 
-OPTIONS        /api/v1/*path                           controllers.Application.preflight(path)
+GET            /assets/*file                           controllers.Assets.at(path="/public", file)
