@@ -1,22 +1,23 @@
+<!doctype html>
 <html>
 <head>
+  <title>socobo-frontend</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+
+  <link rel="import" href="elements/socobo-app/socobo-app.html">
+
+  <link rel="stylesheet" href="stylesheets/styles.css">
 </head>
-<body>
-<form action="/register" method="post">
-  user name:<br>
-  <input type="text" name="userName">
-  <br>
-  Email<br>
-  <input type="email" name="email">
-  <br>
-  Name: <br>
-  <input type="text" name="name">
-  <br>
-  Password:
-  <br>
-  <input type="password" name="password">
-  <br>
-  <input type="submit">
-</form>
+
+<body unresolved>
+
+  <socobo-app></socobo-app>
+
+  <script src="javascripts/main.js"></script>
 </body>
 </html>

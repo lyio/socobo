@@ -1,0 +1,16 @@
+{
+  "name": "socobo-frontend",
+  "description": "Frontend Project for Socobo",
+  "homepage": "",
+  "keywords": [
+  ],
+  "author": "flashback2k14 <https://github.com/flashback2k14>",
+  "private": true,
+  "ignore": [
+    "bower_components",
+    "components"
+  ],
+  "dependencies": {
+    "frontend": "flashback2k14/socobo-frontend#master"
+  }
+}
