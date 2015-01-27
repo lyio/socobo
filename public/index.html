@@ -2,22 +2,30 @@
 <html>
 <head>
   <title>socobo-frontend</title>
-
+  <!-- Display scaling -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-
+  <!-- theme-color: Chrome for Android > 39 -->	
+  <meta name="theme-color" content="#db5945">
+  <!-- favicon -->
+  <link id="favicon" rel="icon" type="image/ico" href="images/favicons/xhdpi-96/favicon.ico">
+  <link id="faviconIE" rel="shortcut icon" type="image/x-icon" href="images/favicons/xhdpi-96/favicon.ico">
+  <link id="faviconChrome" rel="icon" sizes="192x192" href="images/favicons/xxxhdpi-192/favicon.png">
+  <!-- Webcomponents -->
   <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
-
+  <!-- Socobo Custom Element -->
   <link rel="import" href="elements/socobo-app/socobo-app.html">
-
+  <!-- main stylesheet -->
   <link rel="stylesheet" href="stylesheets/styles.css">
+  <!-- homescreen-installed app: Chrome for Android > 39 -->
+  <link rel="manifest" href="manifests/manifest.json">
 </head>
 
 <body unresolved>
-
+  <!-- the hole application --> 
   <socobo-app></socobo-app>
-
+  <!-- main javascript -->
   <script src="javascripts/main.js"></script>
 </body>
 </html>
