@@ -1,0 +1,14 @@
+{
+  "name": "module-name",
+  "version": "0.0.1",
+  "description": "An example module to illustrate the usage of a package.json",
+  "author": "lyio",
+  "dependencies": {
+    "bower": "*"
+  },
+  "scripts": {"start": "bower install"},
+
+  "preferGlobal": true,
+  "private": true
+}
+

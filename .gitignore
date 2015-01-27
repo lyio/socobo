@@ -1,6 +1,7 @@
 logs
 project/project
 project/target
+public/bower_components
 target
 tmp
 .history
