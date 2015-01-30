@@ -1,3 +1,5 @@
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -73,7 +75,8 @@ public static class SpringDataJpaConfiguration {
 
     @Bean
     public EntityManagerFactory entityManagerFactory() {
-        return Persistence.createEntityManagerFactory(DEFAULT_PERSISTENCE_UNIT);
+        Config conf = ConfigFactory.load();
+        return Persistence.createEntityManagerFactory(conf.getString("jpa.default"));
     }
 
     @Bean
