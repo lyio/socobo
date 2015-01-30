@@ -57,7 +57,7 @@ public class LoginController extends Controller {
     public Result logout() {
         response().discardCookie(UserController.AUTH_TOKEN);
         getUser().deleteAuthToken();
-        return redirect("/");
+        return ok();
     }
 
 }
