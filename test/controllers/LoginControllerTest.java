@@ -7,12 +7,17 @@ import org.junit.Test;
 import play.libs.F;
 import play.mvc.Http;
 import play.mvc.Result;
+import play.mvc.Security;
 
 import java.util.HashMap;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
+import static play.mvc.Http.Status.OK;
+import static play.mvc.Http.Status.UNAUTHORIZED;
+import static play.test.Helpers.callAction;
+import static play.test.Helpers.fakeRequest;
 import static play.test.Helpers.status;
 
 public class LoginControllerTest {
@@ -45,7 +50,7 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void testLogout_Unauthorized() throws Exception {
+    public void testLogout_Successful() throws Exception {
         final User mockedUser = mock(User.class);
         final Http.Context mockContext = getMockContext("");
         mockContext.args = new HashMap<>();
@@ -54,7 +59,16 @@ public class LoginControllerTest {
         final Result logout = controllerUnderTest.logout();
         verify(mockResponse, atLeastOnce()).discardCookie(UserController.AUTH_TOKEN);
         verify(mockedUser, atLeastOnce()).deleteAuthToken();
-        assertThat(status(logout)).isEqualTo(303);
+        assertThat(status(logout)).isEqualTo(OK);
+    }
+
+    @Test
+    public void testLogout_Unauhtorized() throws Exception{
+        Result result = callAction(
+                controllers.routes.ref.LoginController.logout(),
+                fakeRequest()
+        );
+        assertThat(status(result)).isEqualTo(UNAUTHORIZED);
     }
 
     private Http.Context getMockContext(String body) throws Exception {
