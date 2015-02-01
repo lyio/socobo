@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 @Entity
+@Table(name="socobo_user")
 public class User {
 
     public String name;
