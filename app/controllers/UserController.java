@@ -1,11 +1,13 @@
 package controllers;
 
 import biz.UserService;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.user.SignUp;
 import models.user.User;
 import datalayer.UserRepository;
 import play.data.Form;
 import play.libs.F;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -46,6 +48,10 @@ public class UserController extends Controller {
             if (u != null) {
                 // setting the resource location header as appropriate for REST
                 response().setHeader(Http.HeaderNames.LOCATION, routes.UserController.details(u.userName).url());
+                final String authToken = userService.createTokenForUser(u);
+                final ObjectNode authTokenJson = Json.newObject();
+                authTokenJson.put(UserController.AUTH_TOKEN, u.authToken);
+                response().setCookie(UserController.AUTH_TOKEN, u.authToken);
                 return F.Promise.promise(() -> ok(toJson(u)));
             } else {
                 return F.Promise.promise(() -> internalServerError("Error creating user. Maybe username already taken"));
