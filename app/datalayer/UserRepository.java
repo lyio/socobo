@@ -8,13 +8,13 @@ import javax.inject.Singleton;
 
 @Named
 @Singleton
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User, String> {
 
     User findByName(String name);
 
     User findByUserName(String userName);
 
-    User findByEmailAndShaPassword(String email, String passwordSha);
+    User findByEmailAddressAndShaPassword(String email, String passwordSha);
 
     User findByAuthToken(String authToken);
 }

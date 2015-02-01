@@ -1,17 +1,19 @@
 package models.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import models.fridge.Fridge;
 import play.data.validation.Constraints;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 @Entity
-@Table(name="socobo_user")
+@Table(name = "socobo_user")
 public class User {
 
     public String name;
@@ -35,7 +37,7 @@ public class User {
     @Constraints.MaxLength(256)
     @Constraints.Required
     @Constraints.Email
-    public String email;
+    public String emailAddress;
 
     @Column(nullable = false)
     public String pictureUrl;

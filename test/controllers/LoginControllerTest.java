@@ -1,13 +1,13 @@
 package controllers;
 
 import biz.UserService;
-import models.user.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import datalayer.UserRepository;
+import models.user.User;
 import org.junit.Test;
 import play.libs.F;
 import play.mvc.Http;
 import play.mvc.Result;
-import play.mvc.Security;
 
 import java.util.HashMap;
 
@@ -16,9 +16,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 import static play.mvc.Http.Status.OK;
 import static play.mvc.Http.Status.UNAUTHORIZED;
-import static play.test.Helpers.callAction;
-import static play.test.Helpers.fakeRequest;
-import static play.test.Helpers.status;
+import static play.test.Helpers.*;
 
 public class LoginControllerTest {
 
@@ -40,19 +38,20 @@ public class LoginControllerTest {
 
         testUser = new User();
         testUser.name = "Test User";
+        testUser.emailAddress = "bla@socobo.com";
         testUser.shaPassword = "password123!";
         testUser.userName = "l33t";
 
         when(authenticator.getUsername(any(Http.Context.class))).thenReturn(null);
         when(userService.createUser(any(User.class))).thenReturn(F.Promise.promise(() -> testUser));
-        Http.Context.current.set(getMockContext("{\"name\": \"Thomas\", \"password\": \"password1\", \"userName\": \"lyio\"}"));
+        Http.Context.current.set(getMockContext("{\"password\": \"password1\", \"emailAddress\": \"lyio@socobo.com\"}"));
         controllerUnderTest = new LoginController(userService);
     }
 
     @Test
     public void testLogout_Successful() throws Exception {
         final User mockedUser = mock(User.class);
-        final Http.Context mockContext = getMockContext("");
+        final Http.Context mockContext = getMockContext(null);
         mockContext.args = new HashMap<>();
         mockContext.args.put("user", mockedUser);
         Http.Context.current.set(mockContext);
@@ -63,12 +62,30 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void testLogout_Unauhtorized() throws Exception{
+    public void testLogout_Unauthorized() throws Exception {
         Result result = callAction(
                 controllers.routes.ref.LoginController.logout(),
                 fakeRequest()
         );
         assertThat(status(result)).isEqualTo(UNAUTHORIZED);
+    }
+
+    @Test
+    public void testLogin_Successfull() throws Exception {
+        when(userService.findByEmailAddressAndPassword(anyString(), anyString())).thenReturn(testUser);
+        final Result result = controllerUnderTest.handleLogin();
+
+        assertThat(status(result)).isEqualTo(OK);
+        verify(mockResponse, atLeastOnce()).setCookie(eq(UserController.AUTH_TOKEN), anyString());
+    }
+
+    @Test
+    public void testLogin_Successfull_Returns_User() throws Exception {
+        when(userService.findByEmailAddressAndPassword(anyString(), anyString())).thenReturn(testUser);
+        final Result result = controllerUnderTest.handleLogin();
+
+        assertThat(status(result)).isEqualTo(OK);
+        assertThat(contentAsString(result)).contains(testUser.emailAddress);
     }
 
     private Http.Context getMockContext(String body) throws Exception {
@@ -77,9 +94,11 @@ public class LoginControllerTest {
         mockResponse = mock(Http.Response.class);
         Http.Context mockContext = mock(Http.Context.class);
         when(mockContext.request()).thenReturn(mockRequest);
-        when(mockContext.response()).thenReturn(mockResponse);
-
         when(mockRequest.body()).thenReturn(mockBody);
+        when(mockContext.response()).thenReturn(mockResponse);
+        if (body != null) {
+            when(mockBody.asJson()).thenReturn(new ObjectMapper().readTree(body));
+        }
         return mockContext;
     }
 }
