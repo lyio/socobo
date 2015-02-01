@@ -12,5 +12,10 @@
   ],
   "dependencies": {
     "frontend": "flashback2k14/socobo-frontend#master"
+  },
+  "resolutions": {
+    "polymer": "^0.5",
+    "core-component-page": "^0.5",
+    "webcomponentsjs": "^0.5"
   }
 }
