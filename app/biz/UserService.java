@@ -1,6 +1,5 @@
 package biz;
 
-import models.fridge.Fridge;
 import models.recipes.statics.Statics;
 import models.user.SignUp;
 import models.user.User;
@@ -11,7 +10,6 @@ import play.libs.F;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Named
@@ -34,7 +32,7 @@ public class UserService {
             if (option.isPresent()) {
                 final User validatedUser = option.get();
                 userRepository.save(validatedUser);
-                return userRepository.findByUserName(validatedUser.userName);
+                return userRepository.findOne(validatedUser.userName);
             } else {
                 throw new Exception("Error validating user");
             }
@@ -49,13 +47,9 @@ public class UserService {
 
     /**
      * Finds user by looking for email address and password hash
-     *
-     * @param emailAddress
-     * @param password
-     * @return
      */
     public User findByEmailAddressAndPassword(String emailAddress, String password) {
-        return userRepository.findByEmailAndShaPassword(emailAddress, Base64.encode(User.createSha512(password)));
+        return userRepository.findByEmailAddressAndShaPassword(emailAddress, Base64.encode(User.createSha512(password)));
     }
 
     private Optional<User> validateUser(final User user) {
@@ -73,7 +67,7 @@ public class UserService {
     public F.Promise<User> createUser(final SignUp newUser) {
         final User user = new User();
         user.userName = newUser.userName;
-        user.email = newUser.email;
+        user.emailAddress = newUser.email;
         user.shaPassword = Base64.encode(User.createSha512(newUser.password));
         user.createdAt = DateTime.now().getMillis();
         user.pictureUrl = Statics.DEFAULT_IMG_URL;
