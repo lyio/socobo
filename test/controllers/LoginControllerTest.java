@@ -51,7 +51,7 @@ public class LoginControllerTest {
     @Test
     public void testLogout_Successful() throws Exception {
         final User mockedUser = mock(User.class);
-        final Http.Context mockContext = getMockContext("");
+        final Http.Context mockContext = getMockContext(null);
         mockContext.args = new HashMap<>();
         mockContext.args.put("user", mockedUser);
         Http.Context.current.set(mockContext);
@@ -96,7 +96,9 @@ public class LoginControllerTest {
         when(mockContext.request()).thenReturn(mockRequest);
         when(mockRequest.body()).thenReturn(mockBody);
         when(mockContext.response()).thenReturn(mockResponse);
-        when(mockBody.asJson()).thenReturn(new ObjectMapper().readTree(body));
+        if (body != null) {
+            when(mockBody.asJson()).thenReturn(new ObjectMapper().readTree(body));
+        }
         return mockContext;
     }
 }
