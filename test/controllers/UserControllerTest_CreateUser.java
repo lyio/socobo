@@ -75,7 +75,7 @@ public class UserControllerTest_CreateUser {
 
     @Test
     public void testCreateUserFailure() throws Exception {
-        when(userService.createUser(any(User.class))).thenReturn(F.Promise.throwing(new Exception()));
+        when(userService.createUser(any(User.class))).thenReturn(F.Promise.promise(()->null));
         controllerUnderTest.createUser().onRedeem(r ->
         {
             assertThat(status(r)).isNotEqualTo(OK);

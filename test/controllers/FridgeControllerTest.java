@@ -1,11 +1,11 @@
 package controllers;
 
-import models.fridge.Fridge;
 import datalayer.FridgeRepository;
-import models.fridge.Item;
 import datalayer.ProduceRepository;
-import models.user.User;
 import datalayer.UserRepository;
+import models.fridge.Fridge;
+import models.fridge.Item;
+import models.user.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static play.mvc.Http.Status.NOT_FOUND;
 import static play.mvc.Http.Status.OK;
