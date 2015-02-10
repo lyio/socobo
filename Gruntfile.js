@@ -1,11 +1,12 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         bowercopy: {
             options: {
-                srcPrefix: 'frontend/bower_components/'
+                srcPrefix: 'frontend/bower_components/',
+                clean: 'true'
 
             },
 
@@ -14,39 +15,54 @@ module.exports = function(grunt) {
                     destPrefix: ''
                 },
                 files: {
-                    'app/assets/javascripts': 'frontend/javascripts',
-                    'app/assets/images': 'frontend/images',
-                    'app/assets/stylesheets': 'frontend/stylesheets',
-                    'app/assets/base.html': 'frontend/index.html',
+                    'public/javascripts': 'frontend/javascripts',
+                    'public/images': 'frontend/images',
+                    'public/stylesheets': 'frontend/stylesheets',
+                    'public/base.html': 'frontend/index.html',
+                    'public/elements': 'frontend/elements',
 
-                    'frontend/javascripts': 'frontend/javascripts',
-                    'frontend/images': 'frontend/images',
-                    'frontend/stylesheets': 'frontend/stylesheets',
-                    'app/assets/elements': 'frontend/elements',
-
-
-                    'app/assets/bower_components' : '*'
+                    'public/bower_components': '*',
+                    'public/bower_components/polymer/polymer.js': 'polymer/polymer.min.js',
+                    'public/bower_components/platform/platform.js': 'platform/platform.js'
                 }
             }
         },
-        vulcanize: {
+        cdnify: {
             default: {
-                options : {
-
+                options: {
+                    rewriter: function (url) {
+                        if (url.indexOf("google") === -1 && url.indexOf("..") != 0)
+                            return "assets/" + url; // leave data URIs untouched
+                        else
+                            return url; // add query string to all other URLs
+                    },
+                    html: {
+                        'img[src]': 'src',
+                        'link[rel=stylesheet]': 'href',
+                        'link[rel=import]': 'href',
+                        'link[rel=manifest]': 'href',
+                        'link[rel=icon]': 'href',
+                        'link[rel="shortcut icon"]': 'href',
+                        'script[src]': 'src',
+                        'source[src]': 'src'
+                    }
                 },
-                files: {
-                    'app/assets/index.html': 'app/assets/base.html'
-                }
+                files: [{
+                    expand: true,
+                    cwd: 'public',
+                    src: 'index.html',
+                    dest: 'public'
+                }]
             }
         }
     });
 
-    // Load the plugin that provides the "uglify" task.
+    // Load plugins
     grunt.loadNpmTasks('grunt-bowercopy');
-    grunt.loadNpmTasks('grunt-vulcanize');
+    grunt.loadNpmTasks('grunt-cdnify');
 
     // Default task(s).
-    grunt.registerTask('bower', ['bowercopy', 'vulcanize']);
+    grunt.registerTask('release', ['bowercopy', 'cdnify']);
 
 };
 

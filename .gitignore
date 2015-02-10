@@ -1,7 +1,6 @@
 logs
 project/project
 project/target
-public/bower_components
 target
 tmp
 .history
@@ -14,4 +13,9 @@ dist
 /.project
 /RUNNING_PID
 /.settings
+
+# frontend
+public/bower_components
 /node_modules
+/public
+/frontend

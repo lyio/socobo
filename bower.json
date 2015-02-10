@@ -1,21 +1,35 @@
 {
   "name": "socobo-frontend",
   "description": "Frontend Project for Socobo",
-  "homepage": "",
-  "keywords": [
-  ],
+  "homepage": "https://socobo.herokuapp.com",
+  "keywords": [],
   "author": "flashback2k14 <https://github.com/flashback2k14>",
   "private": true,
   "ignore": [
+    "node_modules",
     "bower_components",
-    "components"
+    "components",
+    "/test",
+    "source",
+    "spec",
+    ".bowerrc",
+    ".gitignore",
+    ".jshintignore",
+    ".jshintrc",
+    "bower.json",
+    "gruntfile.js",
+    "package.json",
+    "README.md",
+    "notes.txt"
   ],
   "dependencies": {
-    "frontend": "flashback2k14/socobo-frontend#master"
+    "frontend": "flashback2k14/socobo-frontend#latest",
+    "platform": "polymer/platform#master"
   },
   "resolutions": {
-    "polymer": "^0.5",
-    "core-component-page": "^0.5",
-    "webcomponentsjs": "^0.5"
+    "polymer": "^0.5.4",
+    "core-component-page": "^0.5.4",
+    "webcomponentsjs": "^0.5.4",
+    "platform": "master"
   }
 }
