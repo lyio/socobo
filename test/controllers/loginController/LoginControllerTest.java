@@ -1,7 +1,10 @@
-package controllers;
+package controllers.loginController;
 
 import biz.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import controllers.Authenticator;
+import controllers.LoginController;
+import controllers.UserController;
 import datalayer.UserRepository;
 import models.user.User;
 import org.junit.Test;
@@ -20,8 +23,6 @@ import static play.test.Helpers.*;
 
 public class LoginControllerTest {
 
-    private UserRepository userRepository;
-
     private UserService userService;
 
     private User testUser;
@@ -32,7 +33,6 @@ public class LoginControllerTest {
 
     @org.junit.Before
     public void setUp() throws Exception {
-        userRepository = mock(UserRepository.class);
         userService = mock(UserService.class);
         authenticator = mock(Authenticator.class);
 
