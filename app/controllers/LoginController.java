@@ -15,6 +15,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import static play.libs.Json.toJson;
+
 @Named
 @Singleton
 public class LoginController extends Controller {
@@ -45,7 +47,7 @@ public class LoginController extends Controller {
             ObjectNode authTokenJson = Json.newObject();
             authTokenJson.put(UserController.AUTH_TOKEN, authToken);
             response().setCookie(UserController.AUTH_TOKEN, authToken);
-            return ok(authTokenJson);
+            return ok(toJson(user));
         }
     }
 

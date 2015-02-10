@@ -1,5 +1,6 @@
-package controllers;
+package controllers.fridgeController;
 
+import controllers.FridgeController;
 import models.fridge.Fridge;
 import datalayer.FridgeRepository;
 import models.fridge.Item;
