@@ -47,7 +47,7 @@ public class UserController extends Controller {
         return userService.createUser(newUser).flatMap(u -> {
             if (u != null) {
                 // setting the resource location header as appropriate for REST
-                response().setHeader(Http.HeaderNames.LOCATION, routes.UserController.details(u.userName).url());
+                response().setHeader(Http.HeaderNames.LOCATION, routes.UserController.profile(u.userName).url());
                 final String authToken = userService.createTokenForUser(u);
                 final ObjectNode authTokenJson = Json.newObject();
                 authTokenJson.put(UserController.AUTH_TOKEN, u.authToken);
@@ -60,8 +60,13 @@ public class UserController extends Controller {
     }
 
     @Security.Authenticated(controllers.Authenticator.class)
-    public Result details(String userId) {
-        final User user = userRepository.findByUserName(userId);
-        return user != null ? ok(toJson(user)) : notFound();
+    public Result profile(final String userId) {
+        final User user = LoginController.getUser();
+        if (user.userName.equals(userId)) {
+            return ok(toJson(user));
+        } else {
+            return forbidden();
+        }
+
     }
 }

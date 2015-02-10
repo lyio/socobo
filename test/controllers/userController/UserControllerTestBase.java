@@ -2,7 +2,9 @@ package controllers.userController;
 
 
 import biz.UserService;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeCreator;
 import controllers.UserController;
 import datalayer.UserRepository;
 import models.user.User;
@@ -28,7 +30,9 @@ public class UserControllerTestBase {
         when(mockContext.request()).thenReturn(mockRequest);
         when(mockRequest.body()).thenReturn(mockBody);
         when(mockContext.response()).thenReturn(mockResponse);
-        when(mockBody.asJson()).thenReturn(new ObjectMapper().readTree(body));
+        if (body != null && !body.isEmpty()) {
+            when(mockBody.asJson()).thenReturn(new ObjectMapper().readTree(body));
+        }
         return mockContext;
     }
 }
