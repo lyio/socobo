@@ -13,7 +13,7 @@ GET            /api/v1/:userId/fridge                  @controllers.FridgeContro
 POST           /api/v1/:userId/fridge                  @controllers.FridgeController.add(userId)
 GET            /api/v1/:userId/fridge/items/:id        @controllers.FridgeController.showItem(userId, id)
 
-GET            /api/v1/user/:userName                  @controllers.UserController.details(userName)
+GET            /api/v1/user/:userName                  @controllers.UserController.profile(userName)
 
 GET            /api/v1/produce                         @controllers.FridgeController.listProduce()
 

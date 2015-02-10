@@ -73,4 +73,8 @@ public class UserService {
         user.pictureUrl = Statics.DEFAULT_IMG_URL;
         return createUser(user);
     }
+
+    public User profile(final String userName) {
+        return userRepository.findByUserName(userName);
+    }
 }
