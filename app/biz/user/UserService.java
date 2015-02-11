@@ -1,4 +1,4 @@
-package biz;
+package biz.user;
 
 import models.recipes.statics.Statics;
 import models.user.SignUp;

@@ -1,6 +1,6 @@
 package controllers.userController;
 
-import biz.UserService;
+import biz.user.UserService;
 import controllers.UserController;
 import datalayer.UserRepository;
 import models.user.SignUp;

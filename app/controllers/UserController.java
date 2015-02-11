@@ -1,6 +1,6 @@
 package controllers;
 
-import biz.UserService;
+import biz.user.UserService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.user.SignUp;
 import models.user.User;

@@ -1,5 +1,6 @@
 package biz;
 
+import biz.user.UserService;
 import datalayer.FridgeRepository;
 import datalayer.ProduceRepository;
 import datalayer.UserRepository;

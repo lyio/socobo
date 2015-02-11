@@ -1,6 +1,6 @@
 package controllers;
 
-import biz.UserService;
+import biz.user.UserService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.user.Login;
 import models.user.User;
@@ -41,8 +41,7 @@ public class LoginController extends Controller {
 
         if (user == null) {
             return unauthorized("email and password combination not found");
-        }
-        else {
+        } else {
             String authToken = userService.createTokenForUser(user);
             ObjectNode authTokenJson = Json.newObject();
             authTokenJson.put(UserController.AUTH_TOKEN, authToken);

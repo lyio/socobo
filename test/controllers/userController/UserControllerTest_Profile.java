@@ -1,6 +1,6 @@
 package controllers.userController;
 
-import biz.UserService;
+import biz.user.UserService;
 import controllers.UserController;
 import datalayer.UserRepository;
 import models.user.User;
@@ -13,7 +13,8 @@ import java.util.HashMap;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static play.mvc.Http.Status.*;
+import static play.mvc.Http.Status.FORBIDDEN;
+import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.contentAsString;
 import static play.test.Helpers.status;
 
