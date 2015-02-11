@@ -1,6 +1,5 @@
 package models.fridge;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import models.user.User;
 
 import javax.persistence.*;
@@ -13,10 +12,10 @@ public class Fridge {
     @GeneratedValue
     public Long id;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     public User user;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public List<Item> items;
 
     public Fridge() {

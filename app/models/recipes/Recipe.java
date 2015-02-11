@@ -29,7 +29,7 @@ public final class Recipe {
 
     @Constraints.Required
     @ElementCollection
-    public List<Statics.CATEGORY> categories;
+    public List<Statics.RECIPE_CATEGORY> categories;
 
     @Constraints.Required
     @Column(nullable = false)
