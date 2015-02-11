@@ -18,7 +18,7 @@ module.exports = function (grunt) {
                     'public/javascripts': 'frontend/javascripts',
                     'public/images': 'frontend/images',
                     'public/stylesheets': 'frontend/stylesheets',
-                    'public/base.html': 'frontend/index.html',
+                    'public/index.html': 'frontend/index.html',
                     'public/elements': 'frontend/elements',
 
                     'public/bower_components': '*',
