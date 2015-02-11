@@ -24,10 +24,5 @@ POST           /signup                                 @controllers.UserControll
 
 # Map static resources from the /public folder to the /assets URL path
 GET            /assets/*file                           controllers.Assets.at(path="/public", file)
-GET            /bower_components/*file                 controllers.Assets.at(path="/public/bower_components", file)
-GET            /elements/*file                         controllers.Assets.at(path="/public/bower_components/frontend/elements", file)
-GET            /javascripts/*file                      controllers.Assets.at(path="/public/javascripts", file)
-GET            /stylesheets/*file                      controllers.Assets.at(path="/public/stylesheets", file)
-GET            /images/*file                           controllers.Assets.at(path="/public/images", file)
 
-OPTIONS        /:path                           controllers.Application.preflight(path)
+OPTIONS        /*path                           controllers.Application.preflight(path)
