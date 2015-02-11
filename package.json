@@ -11,7 +11,10 @@
     "grunt-cdnify": "^0.1.1"
   },
   "scripts": {
-    "start": "grunt release"
+    "postinstall": "grunt release"
+  },
+  "engines": {
+    "node": "0.10.x"
   },
   "preferGlobal": true,
   "private": true
