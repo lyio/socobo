@@ -20,7 +20,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class FridgeServiceTest {
+public class FridgeServiceTest_GetFridge {
 
     @Mock
     FridgeRepository fridgeRepository;
@@ -65,5 +65,10 @@ public class FridgeServiceTest {
     @Test
     public void testGetFridgeForUser_Calls_FridgeRepository() throws Exception {
         verify(fridgeRepository, times(1)).findByUserUserName(eq(testUser.userName));
+    }
+
+    @Test
+    public void testAddItem_Calls_FridgeRepository_Once() {
+
     }
 }
