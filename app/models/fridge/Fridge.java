@@ -18,6 +18,11 @@ public class Fridge {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public List<Item> items;
 
+    @Column(nullable = false)
+    public long createdAt;
+
+    public long bestBefore;
+
     public Fridge() {
     }
 
