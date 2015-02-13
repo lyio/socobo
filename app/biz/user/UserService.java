@@ -1,11 +1,13 @@
 package biz.user;
 
+import datalayer.UserRepository;
 import models.recipes.statics.Statics;
 import models.user.SignUp;
 import models.user.User;
-import datalayer.UserRepository;
 import org.apache.xerces.impl.dv.util.Base64;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import play.libs.F;
 
 import javax.inject.Inject;
@@ -13,6 +15,7 @@ import javax.inject.Named;
 import java.util.Optional;
 
 @Named
+@Component
 public class UserService {
 
     private static UserRepository userRepository;
@@ -20,6 +23,11 @@ public class UserService {
     @Inject
     public UserService(final UserRepository repository) {
         userRepository = repository;
+    }
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        UserService.userRepository = userRepository;
     }
 
     public static User findByAuthToken(String authToken) {
