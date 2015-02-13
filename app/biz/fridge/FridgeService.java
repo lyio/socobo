@@ -6,8 +6,10 @@ import models.fridge.Fridge;
 import models.fridge.Item;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.Objects;
 
+@Named
 public class FridgeService {
 
     final FridgeRepository fridgeRepository;

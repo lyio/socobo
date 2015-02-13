@@ -1,5 +1,6 @@
 package controllers.fridgeController;
 
+import biz.fridge.FridgeService;
 import controllers.FridgeController;
 import models.fridge.Fridge;
 import datalayer.FridgeRepository;
@@ -41,10 +42,10 @@ public class FridgeControllerTest {
         fridgeRepository = mock(FridgeRepository.class);
         when(fridgeRepository.findByUserUserName(testUser)).thenReturn(expectedFridge);
 
+        final FridgeService fridgeService = mock(FridgeService.class);
         fridgeController = new FridgeController(
                 fridgeRepository,
-                mock(UserRepository.class),
-                mock(ProduceRepository.class));
+                 fridgeService);
 
         fridgeResult = fridgeController.fridge(testUser);
     }
