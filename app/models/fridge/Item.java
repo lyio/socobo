@@ -2,8 +2,10 @@ package models.fridge;
 
 import models.produce.Produce;
 import models.recipes.statics.Statics;
+import play.data.validation.Constraints;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Resource representing the meta-data for the relationship between a {@link models.produce.Produce} and
@@ -16,19 +18,22 @@ public class Item {
     @GeneratedValue
     public Long id;
 
+    @Constraints.Required
     public int amount;
 
+    @Constraints.Required
+    @Column(nullable = false)
     public Statics.UNIT unit;
 
     @ManyToOne(cascade = CascadeType.ALL)
     public Produce produce;
 
-    public Item() {
-    }
+    @Column(nullable = false)
+    public long createdAt;
 
-    public Item(Produce produce, int amount, Statics.UNIT unit) {
-        this.produce = produce;
-        this.amount = amount;
-        this.unit = unit;
-    }
+    @Column(nullable = true)
+    public long lastUpdatedAt;
+
+    @ElementCollection
+    List<String> categories;
 }
