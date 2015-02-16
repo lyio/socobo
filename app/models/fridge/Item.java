@@ -29,10 +29,12 @@ public class Item {
     public Produce produce;
 
     @Column(nullable = false)
-    public long createdAt;
+    public Long createdAt;
 
     @Column(nullable = true)
     public long lastUpdatedAt;
+
+    public Long bestBefore;
 
     @ElementCollection
     List<String> categories;
