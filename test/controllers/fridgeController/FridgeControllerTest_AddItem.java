@@ -60,7 +60,10 @@ public class FridgeControllerTest_AddItem extends ControllerTestBase {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        testItem = new Item(new Produce("test"), 2, Statics.UNIT.PIECE);
+        testItem = new Item();
+        testItem.produce = new Produce("Test");
+        testItem.amount = 2;
+        testItem.unit = Statics.UNIT.PIECE;
         final Fridge expectedFridge = new Fridge(new User(testUser), fridgeItems);
         expectedFridge.items.add(testItem);
         when(fridgeRepository.findByUserUserName(testUser)).thenReturn(expectedFridge);
@@ -85,7 +88,7 @@ public class FridgeControllerTest_AddItem extends ControllerTestBase {
     public void testAddItem_Returns_Unauthorized_For_Wrong_User() throws Exception {
         Http.Context.current.set(mock(Http.Context.class));
         Result result = callAction(
-                controllers.routes.ref.FridgeController.add(testUser),
+                controllers.routes.ref.FridgeController.addItem(testUser),
                 fakeRequest()
         );
         assertThat(status(result)).isEqualTo(UNAUTHORIZED);
