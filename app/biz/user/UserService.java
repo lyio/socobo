@@ -1,33 +1,29 @@
 package biz.user;
 
+import biz.fridge.FridgeService;
 import datalayer.UserRepository;
+import java.util.Optional;
 import models.recipes.statics.Statics;
 import models.user.SignUp;
 import models.user.User;
 import org.apache.xerces.impl.dv.util.Base64;
 import org.joda.time.DateTime;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import play.libs.F;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Optional;
 
 @Named
-@Component
 public class UserService {
 
     private static UserRepository userRepository;
 
-    @Inject
-    public UserService(final UserRepository repository) {
-        userRepository = repository;
-    }
+    private final FridgeService fridgeService;
 
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        UserService.userRepository = userRepository;
+    @Inject
+    public UserService(final UserRepository repository, final FridgeService fridgeService) {
+        userRepository = repository;
+        this.fridgeService = fridgeService;
     }
 
     public static User findByAuthToken(String authToken) {
@@ -40,6 +36,7 @@ public class UserService {
             if (option.isPresent()) {
                 final User validatedUser = option.get();
                 userRepository.save(validatedUser);
+                fridgeService.createFridgeForUser(validatedUser);
                 return userRepository.findOne(validatedUser.userName);
             } else {
                 throw new Exception("Error validating user");
