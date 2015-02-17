@@ -1,11 +1,13 @@
 package models.fridge;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import models.produce.Produce;
 import models.recipes.statics.Statics;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Resource representing the meta-data for the relationship between a {@link models.produce.Produce} and
@@ -36,6 +38,8 @@ public class Item {
 
     public Long bestBefore;
 
-    @ElementCollection
-    List<String> categories;
+    @JsonDeserialize
+    @JsonSerialize
+    @ElementCollection(fetch = FetchType.EAGER)
+    Set<String> categories;
 }
