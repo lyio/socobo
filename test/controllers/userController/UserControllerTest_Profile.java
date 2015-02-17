@@ -2,7 +2,6 @@ package controllers.userController;
 
 import biz.user.UserService;
 import controllers.UserController;
-import datalayer.UserRepository;
 import models.user.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +21,6 @@ public class UserControllerTest_Profile extends UserControllerTestBase {
 
     @Before
     public void setUp() throws Exception {
-        userRepository = mock(UserRepository.class);
         userService = mock(UserService.class);
 
         testUser = new User();
@@ -35,7 +33,7 @@ public class UserControllerTest_Profile extends UserControllerTestBase {
         mockContext.args = new HashMap<>();
         mockContext.args.put("user", testUser);
         Http.Context.current.set(mockContext);
-        controllerUnderTest = new UserController(userService, userRepository);
+        controllerUnderTest = new UserController(userService);
     }
 
     @Test

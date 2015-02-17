@@ -2,7 +2,6 @@ package controllers.userController;
 
 import biz.user.UserService;
 import controllers.UserController;
-import datalayer.UserRepository;
 import models.user.SignUp;
 import models.user.User;
 import org.junit.Test;
@@ -22,7 +21,6 @@ public class UserControllerTest_CreateUser extends UserControllerTestBase {
 
     @org.junit.Before
     public void setUp() throws Exception {
-        userRepository = mock(UserRepository.class);
         userService = mock(UserService.class);
 
         testUser = new User();
@@ -35,7 +33,7 @@ public class UserControllerTest_CreateUser extends UserControllerTestBase {
         requestBody = "{\"pictureUrl\": \"url://example.com\", \"name\": \"Thomas\", \"password\": \"password1\", \"passwordRepeat\": \"password1\"," +
                 " \"userName\": \"lyio\", \"email\": \"test@test.com\"}";
         Http.Context.current.set(getMockContext(requestBody));
-        controllerUnderTest = new UserController(userService, userRepository);
+        controllerUnderTest = new UserController(userService);
     }
 
     @Test
