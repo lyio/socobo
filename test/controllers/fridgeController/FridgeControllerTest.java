@@ -5,6 +5,7 @@ import models.fridge.Fridge;
 import datalayer.FridgeRepository;
 import models.fridge.Item;
 import datalayer.ProduceRepository;
+import models.produce.Produce;
 import models.user.User;
 import datalayer.UserRepository;
 import org.junit.Before;
@@ -73,4 +74,5 @@ public class FridgeControllerTest {
         assertThat(contentAsString(fridgeResult)).contains("id");
         assertThat(contentAsString(fridgeResult)).contains("items");
     }
+
 }

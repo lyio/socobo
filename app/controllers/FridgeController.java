@@ -10,6 +10,7 @@ import datalayer.ProduceRepository;
 import models.recipes.statics.Statics;
 import models.user.User;
 import datalayer.UserRepository;
+import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -17,6 +18,7 @@ import play.mvc.Result;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -62,6 +64,24 @@ public class FridgeController extends Controller {
         fridgeRepository.save(fridge);
 
         return created();
+    }
+
+    /**
+     * Method to remove on item from the fridge using the username and the id
+     * of the item
+     *
+     * @param testUser
+     * @param id
+     * @return Result object including the updated fridge object as json
+     */
+    public Result removeItemFromFridge(final String testUser, final int id){
+        Fridge fridge = fridgeRepository.findByUserUserName(testUser);
+        if (fridge == null) return notFound("No fridge found for this user");
+        List<Item> items = fridge.items;
+        items.remove(id);
+        fridgeRepository.save(fridge);
+        JsonNode fridgeAsJson = Json.toJson(fridge);
+        return ok(fridgeAsJson).as("application/json");
     }
 
     public Result listProduce() {
