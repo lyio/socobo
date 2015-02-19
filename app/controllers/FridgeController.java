@@ -2,14 +2,11 @@ package controllers;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
-import models.fridge.Fridge;
 import datalayer.FridgeRepository;
-import models.fridge.Item;
-import models.produce.Produce;
 import datalayer.ProduceRepository;
-import models.recipes.statics.Statics;
-import models.user.User;
 import datalayer.UserRepository;
+import models.fridge.Fridge;
+import models.fridge.Item;
 import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
@@ -18,8 +15,6 @@ import play.mvc.Result;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static play.libs.Json.fromJson;
@@ -70,12 +65,12 @@ public class FridgeController extends Controller {
      * Method to remove on item from the fridge using the username and the id
      * of the item
      *
-     * @param testUser
-     * @param id
+     * @param user User who want remove a item from the fridge
+     * @param id Unique number of the item to identify it in the database
      * @return Result object including the updated fridge object as json
      */
-    public Result removeItemFromFridge(final String testUser, final int id){
-        Fridge fridge = fridgeRepository.findByUserUserName(testUser);
+    public Result removeItemFromFridge(final String user, final int id) {
+        Fridge fridge = fridgeRepository.findByUserUserName(user);
         if (fridge == null) return notFound("No fridge found for this user");
         List<Item> items = fridge.items;
         items.remove(id);

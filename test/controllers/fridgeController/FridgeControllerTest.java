@@ -1,13 +1,12 @@
 package controllers.fridgeController;
 
 import controllers.FridgeController;
-import models.fridge.Fridge;
 import datalayer.FridgeRepository;
-import models.fridge.Item;
 import datalayer.ProduceRepository;
-import models.produce.Produce;
-import models.user.User;
 import datalayer.UserRepository;
+import models.fridge.Fridge;
+import models.fridge.Item;
+import models.user.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
