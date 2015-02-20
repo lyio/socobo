@@ -1,10 +1,9 @@
 package controllers;
 
-import biz.UserService;
+import biz.user.UserService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.user.SignUp;
 import models.user.User;
-import datalayer.UserRepository;
 import play.data.Form;
 import play.libs.F;
 import play.libs.Json;
@@ -28,12 +27,9 @@ public class UserController extends Controller {
 
     private final UserService userService;
 
-    private final UserRepository userRepository;
-
     @Inject
-    public UserController(final UserService userService, final UserRepository userRepository) {
+    public UserController(final UserService userService) {
         this.userService = userService;
-        this.userRepository = userRepository;
     }
 
     public F.Promise<Result> createUser() {
@@ -67,6 +63,5 @@ public class UserController extends Controller {
         } else {
             return forbidden();
         }
-
     }
 }

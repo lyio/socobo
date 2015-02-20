@@ -1,43 +1,36 @@
 package controllers;
 
 
+import biz.fridge.FridgeService;
 import com.fasterxml.jackson.databind.JsonNode;
-import models.fridge.Fridge;
 import datalayer.FridgeRepository;
+import models.fridge.Fridge;
 import models.fridge.Item;
-import models.produce.Produce;
-import datalayer.ProduceRepository;
-import models.recipes.statics.Statics;
-import models.user.User;
-import datalayer.UserRepository;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
-import java.util.Arrays;
-import java.util.List;
 
 import static play.libs.Json.fromJson;
 import static play.libs.Json.toJson;
 
 @Named
 @Singleton
+@Security.Authenticated(Authenticator.class)
 public class FridgeController extends Controller {
 
     private final FridgeRepository fridgeRepository;
 
-    private final UserRepository userRepository;
-
-    private final ProduceRepository produceRepository;
+    private final FridgeService fridgeService;
 
     @Inject
-    public FridgeController(FridgeRepository fridgeRepository, UserRepository userRepository, ProduceRepository produceRepository) {
+    public FridgeController(FridgeRepository fridgeRepository, FridgeService fridgeService) {
         this.fridgeRepository = fridgeRepository;
-        this.userRepository = userRepository;
-        this.produceRepository = produceRepository;
+        this.fridgeService = fridgeService;
     }
 
     public Result showItem(String userId, String id) {
@@ -50,21 +43,21 @@ public class FridgeController extends Controller {
     }
 
     @BodyParser.Of(BodyParser.Json.class)
-    public Result add(final String userName) {
-        final Fridge fridge = fridgeRepository.findByUserUserName(userName);
-        if (fridge == null) return notFound("No fridge found for this user");
-        System.out.println(request().body());
+    public Result addItem(final String userName) {
+        if (!userName.equals(request().username())) {
+            return forbidden();
+        }
+
         final JsonNode node = request().body().asJson();
         if (node == null) return badRequest("received non-valid json");
         final Item item = fromJson(node, Item.class);
 
-        fridge.items.add(item);
-        fridgeRepository.save(fridge);
+        response().setContentType("application/json");
 
-        return created();
+        return ok(toJson(fridgeService.addItem(userName, item)));
     }
 
     public Result listProduce() {
-        return ok(toJson(produceRepository.findAll()));
+        return notFound();
     }
 }

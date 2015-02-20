@@ -1,6 +1,6 @@
 package controllers;
 
-import biz.UserService;
+import biz.user.UserService;
 import models.user.User;
 import play.mvc.Http;
 import play.mvc.Result;

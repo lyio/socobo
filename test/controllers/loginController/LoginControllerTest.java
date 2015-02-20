@@ -1,11 +1,10 @@
 package controllers.loginController;
 
-import biz.UserService;
+import biz.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import controllers.Authenticator;
 import controllers.LoginController;
 import controllers.UserController;
-import datalayer.UserRepository;
 import models.user.User;
 import org.junit.Test;
 import play.libs.F;

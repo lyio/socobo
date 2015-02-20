@@ -3,6 +3,7 @@ package models.fridge;
 import models.user.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,18 +13,17 @@ public class Fridge {
     @GeneratedValue
     public Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REMOVE)
     public User user;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public List<Item> items;
 
     @Column(nullable = false)
-    public long createdAt;
-
-    public long bestBefore;
+    public Long createdAt;
 
     public Fridge() {
+        this.items = new ArrayList<>();
     }
 
     public Fridge(final User user, final List<Item> items) {
