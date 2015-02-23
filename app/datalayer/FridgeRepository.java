@@ -14,4 +14,6 @@ import javax.inject.Singleton;
 @Singleton
 public interface FridgeRepository extends CrudRepository<Fridge, Long> {
     Fridge findByUserUserName(String userId);
+
+    Fridge findByItemsIdAndUser_UserName(Long id, String userName);
 }

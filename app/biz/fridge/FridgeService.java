@@ -2,6 +2,7 @@ package biz.fridge;
 
 
 import datalayer.FridgeRepository;
+import datalayer.ItemRepository;
 import models.fridge.Fridge;
 import models.fridge.Item;
 import models.user.User;
@@ -14,11 +15,14 @@ import java.util.Objects;
 @Named
 public class FridgeService {
 
-    final FridgeRepository fridgeRepository;
+    private final FridgeRepository fridgeRepository;
+
+    private final ItemRepository itemRepository;
 
     @Inject
-    public FridgeService(FridgeRepository fridgeRepository) {
+    public FridgeService(FridgeRepository fridgeRepository, ItemRepository itemRepository) {
         this.fridgeRepository = fridgeRepository;
+        this.itemRepository = itemRepository;
     }
 
     public Fridge getFridgeForUser(String userName) {
@@ -40,5 +44,13 @@ public class FridgeService {
             fridgeRepository.save(f);
         }
         return getFridgeForUser(userName);
+    }
+
+    public Fridge editItem(final Long id, final String userName, Item changedItem) {
+        final Fridge f = fridgeRepository.findByItemsIdAndUser_UserName(id, userName);
+        if (f.items.stream().anyMatch(i -> Objects.equals(i.id, id))) {
+            itemRepository.save(changedItem);
+        }
+        return fridgeRepository.findOne(f.id);
     }
 }

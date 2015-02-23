@@ -6,7 +6,6 @@ import datalayer.ItemRepository;
 import datalayer.UserRepository;
 import models.fridge.Fridge;
 import models.fridge.Item;
-import models.produce.Produce;
 import models.recipes.statics.Statics;
 import models.user.User;
 import org.junit.Before;
@@ -16,14 +15,13 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
-public class FridgeServiceTest_AddItem {
+public class FridgeServiceTest_EditItem {
 
     @Mock
     FridgeRepository fridgeRepository;
@@ -42,11 +40,10 @@ public class FridgeServiceTest_AddItem {
 
     private Fridge expectedFridge;
 
-    private List<Item> testItems;
-
     private Item testItem;
 
     private ArrayList<Item> expectedItems;
+    private Item changedItem;
 
     @Before
     public void setUp() throws Exception {
@@ -60,29 +57,43 @@ public class FridgeServiceTest_AddItem {
         testItem.id = 2L;
         testItem.unit = Statics.UNIT.GRAM;
 
+        changedItem = new Item();
+        changedItem.amount = 1;
+        changedItem.id = 2L;
+        changedItem.unit = Statics.UNIT.GRAM;
+
         expectedFridge = new Fridge();
         expectedFridge.user = testUser;
 
-        final Item specialItem = new Item();
-        specialItem.id = 1L;
-        final List<Item> itemList = Arrays.asList(new Item(), specialItem, new Item());
-        expectedItems = new ArrayList<>(itemList);
-        testItems = new ArrayList<>(itemList);
+        expectedItems = new ArrayList<>(Arrays.asList(testItem));
+        expectedFridge.items = expectedItems;
 
-        expectedFridge.items = testItems;
-
-        when(fridgeRepository.findByUserUserName(eq(testUser.userName))).thenReturn(expectedFridge);
+        when(fridgeRepository.findByItemsIdAndUser_UserName(eq(testItem.id), eq(testUser.userName)))
+                .thenReturn(expectedFridge);
+        when(fridgeRepository.findOne(anyLong())).thenReturn(expectedFridge);
 
         serviceUnderTest = new FridgeService(fridgeRepository, itemRepository);
-
     }
 
     @Test
-    public void testAddItem_Calls_FridgeRepository_Once() {
-        actualResult = serviceUnderTest.addItem(testUser.userName, testItem);
-        verify(fridgeRepository, times(1)).save(any(Fridge.class));
+    public void testEditItem_Calls_FridgeRepository_Find_Item_Once() {
+        actualResult = serviceUnderTest.editItem(testItem.id, testUser.userName, changedItem);
+        verify(fridgeRepository, times(1)).findByItemsIdAndUser_UserName(eq(testItem.id), eq(testUser.userName));
     }
 
+    @Test
+    public void testEditItem_Saves_New_Item() throws Exception {
+        serviceUnderTest.editItem(testItem.id, testUser.userName, changedItem);
+        verify(itemRepository, times(1)).save(eq(changedItem));
+    }
+
+    @Test
+    public void testEditItem_Calls_FridgeRepository_Find_Fridge_Once() throws Exception {
+        serviceUnderTest.editItem(testItem.id, testUser.userName, changedItem);
+        verify(fridgeRepository, times(1)).findOne(anyLong());
+    }
+
+    /*
     @Test
     public void testAddItem_Returns_With_More_Items() throws Exception {
         actualResult = serviceUnderTest.addItem(testUser.userName, testItem);
@@ -108,5 +119,5 @@ public class FridgeServiceTest_AddItem {
         final List<Item> itemList = actualResult.items;
         final Item actualItem = itemList.get(itemList.size() - 1);
         assertThat(actualItem.createdAt).isNotEqualTo(0);
-    }
+    }*/
 }
