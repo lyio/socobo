@@ -48,9 +48,12 @@ public class FridgeService {
 
     public Fridge editItem(final Long id, final String userName, Item changedItem) {
         final Fridge f = fridgeRepository.findByItemsIdAndUser_UserName(id, userName);
-        if (f.items.stream().anyMatch(i -> Objects.equals(i.id, id))) {
+        final Item originalItem = itemRepository.findOne(changedItem.id);
+        if (f != null && originalItem != null && Objects.equals(changedItem.produce.name, originalItem.produce.name)) {
+            changedItem.lastUpdatedAt = DateTime.now().getMillis();
             itemRepository.save(changedItem);
+            return fridgeRepository.findOne(f.id);
         }
-        return fridgeRepository.findOne(f.id);
+        return null;
     }
 }

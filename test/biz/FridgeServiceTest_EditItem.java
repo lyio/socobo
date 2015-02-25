@@ -6,6 +6,7 @@ import datalayer.ItemRepository;
 import datalayer.UserRepository;
 import models.fridge.Fridge;
 import models.fridge.Item;
+import models.produce.Produce;
 import models.recipes.statics.Statics;
 import models.user.User;
 import org.junit.Before;
@@ -93,31 +94,11 @@ public class FridgeServiceTest_EditItem {
         verify(fridgeRepository, times(1)).findOne(anyLong());
     }
 
-    /*
     @Test
-    public void testAddItem_Returns_With_More_Items() throws Exception {
-        actualResult = serviceUnderTest.addItem(testUser.userName, testItem);
-        assertThat(actualResult.items.size()).isGreaterThan(expectedItems.size());
+    public void testEditItem_Doesnt_Allow_Produce_Changes() throws Exception {
+        changedItem.produce = new Produce("new test produce");
+        serviceUnderTest.editItem(testItem.id, testUser.userName, changedItem);
+        verify(itemRepository, times(0)).save(any(Item.class));
     }
-
-    @Test
-    public void testAddItem_Fails_When_Item_Already_In_Fridge() throws Exception {
-        final Item item = new Item();
-        item.produce = new Produce("Test");
-        item.amount = 3;
-        item.unit = Statics.UNIT.LITRE;
-        item.id = 1L;
-        actualResult = serviceUnderTest.addItem(testUser.userName, item);
-
-        // no addition when Item already in Fridge
-        assertThat(actualResult.items.size()).isEqualTo(expectedItems.size());
-    }
-
-    @Test
-    public void testAddItem_Sets_CreationDate() throws Exception {
-        actualResult = serviceUnderTest.addItem(testUser.userName, testItem);
-        final List<Item> itemList = actualResult.items;
-        final Item actualItem = itemList.get(itemList.size() - 1);
-        assertThat(actualItem.createdAt).isNotEqualTo(0);
-    }*/
 }
+
