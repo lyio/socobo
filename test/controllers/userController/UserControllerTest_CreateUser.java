@@ -62,7 +62,8 @@ public class UserControllerTest_CreateUser extends UserControllerTestBase {
 
     @Test
     public void testCreateUserFailure() throws Exception {
-        when(userService.createUser(any(User.class))).thenReturn(F.Promise.throwing(new Exception()));
-        controllerUnderTest.createUser().onRedeem(r -> assertThat(status(r)).isNotEqualTo(OK));
+        when(userService.createUser(any(SignUp.class))).thenReturn(F.Promise.pure(null));
+        final Result r = controllerUnderTest.createUser().get(500);
+        assertThat(status(r)).isNotEqualTo(OK);
     }
 }
