@@ -6,6 +6,9 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 
+import javax.inject.Named;
+
+@Named
 public class Authenticator extends Security.Authenticator {
 
     public Authenticator() {
@@ -33,6 +36,4 @@ public class Authenticator extends Security.Authenticator {
     public Result onUnauthorized(Http.Context context) {
         return unauthorized();
     }
-
-
 }

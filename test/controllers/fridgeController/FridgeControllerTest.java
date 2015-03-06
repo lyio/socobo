@@ -1,17 +1,24 @@
 package controllers.fridgeController;
 
 import biz.fridge.FridgeService;
+import controllers.ControllerTestBase;
 import controllers.FridgeController;
-import models.fridge.Fridge;
+import controllers.UsernameValidator;
 import datalayer.FridgeRepository;
+import models.fridge.Fridge;
 import models.fridge.Item;
 import models.user.User;
+import org.fest.util.VisibleForTesting;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.util.Assert;
+import play.libs.F;
 import play.mvc.Result;
+import play.mvc.Results;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,28 +29,32 @@ import static play.mvc.Http.Status.NOT_FOUND;
 import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.*;
 
-@RunWith(MockitoJUnitRunner.class)
-public class FridgeControllerTest {
+public class FridgeControllerTest extends ControllerTestBase {
 
     private final String testUser = "test";
+
     private final List<Item> fridgeItems = Arrays.asList(new Item(), new Item(), new Item());
 
+    @Mock
     private FridgeRepository fridgeRepository;
+
     private FridgeController fridgeController;
+
+    @Mock
+    private FridgeService fridgeService;
+
     private Fridge expectedFridge;
+
     private Result fridgeResult;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws Throwable {
+        MockitoAnnotations.initMocks(this);
         expectedFridge = new Fridge(new User(testUser), fridgeItems);
 
-        fridgeRepository = mock(FridgeRepository.class);
         when(fridgeRepository.findByUserUserName(testUser)).thenReturn(expectedFridge);
-
-        final FridgeService fridgeService = mock(FridgeService.class);
-        fridgeController = new FridgeController(
-                fridgeRepository,
-                 fridgeService);
+        when(fridgeService.getFridgeForUser(eq(testUser))).thenReturn(expectedFridge);
+        fridgeController = new FridgeController(fridgeRepository, fridgeService);
 
         fridgeResult = fridgeController.fridge(testUser);
     }
@@ -56,8 +67,13 @@ public class FridgeControllerTest {
     }
 
     @Test
-    public void fridge_Should_Call_Repositories() throws Exception {
-        verify(fridgeRepository, times(1)).findByUserUserName(any());
+    public void fridge_Should_Not_Call_Repositories() throws Exception {
+        verify(fridgeRepository, never()).findByUserUserName(any());
+    }
+
+    @Test
+    public void fridge_Should_Call_FridgeService_Once() throws Exception {
+        verify(fridgeService, times(1)).getFridgeForUser(eq(testUser));
     }
 
     @Test
