@@ -6,10 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import datalayer.FridgeRepository;
 import models.fridge.Fridge;
 import models.fridge.Item;
-import play.mvc.BodyParser;
-import play.mvc.Controller;
-import play.mvc.Result;
-import play.mvc.Security;
+import play.mvc.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,8 +34,10 @@ public class FridgeController extends Controller {
         return play.mvc.Results.TODO;
     }
 
+
+    @With(UsernameValidator.class)
     public Result fridge(final String userName) {
-        final Fridge fridge = fridgeRepository.findByUserUserName(userName);
+        final Fridge fridge = fridgeService.getFridgeForUser(userName);
         return fridge != null ? ok(toJson(fridge)) : notFound("No fridge found for this user");
     }
 

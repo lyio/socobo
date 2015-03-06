@@ -3,6 +3,7 @@ package controllers.loginController;
 import biz.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import controllers.Authenticator;
+import controllers.ControllerTestBase;
 import controllers.LoginController;
 import controllers.UserController;
 import models.user.User;
@@ -20,7 +21,7 @@ import static play.mvc.Http.Status.OK;
 import static play.mvc.Http.Status.UNAUTHORIZED;
 import static play.test.Helpers.*;
 
-public class LoginControllerTest {
+public class LoginControllerTest extends ControllerTestBase {
 
     private UserService userService;
 
@@ -87,7 +88,8 @@ public class LoginControllerTest {
         assertThat(contentAsString(result)).contains(testUser.emailAddress);
     }
 
-    private Http.Context getMockContext(String body) throws Exception {
+    @Override
+    protected Http.Context getMockContext(String body) throws Exception {
         Http.RequestBody mockBody = mock(Http.RequestBody.class);
         Http.Request mockRequest = mock(Http.Request.class);
         mockResponse = mock(Http.Response.class);

@@ -33,7 +33,7 @@ public class UserController extends Controller {
     }
 
     public F.Promise<Result> createUser() {
-        Form<SignUp> signUpForm = Form.form(SignUp.class).bindFromRequest();
+        final Form<SignUp> signUpForm = Form.form(SignUp.class).bindFromRequest();
         if (signUpForm.hasErrors()) {
             return F.Promise.promise(() -> badRequest(signUpForm.errorsAsJson()));
         }
