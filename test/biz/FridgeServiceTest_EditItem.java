@@ -17,7 +17,6 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
@@ -57,11 +56,13 @@ public class FridgeServiceTest_EditItem {
         testItem.amount = 2;
         testItem.id = 2L;
         testItem.unit = Statics.UNIT.GRAM;
+        testItem.produce = new Produce("Test");
 
         changedItem = new Item();
         changedItem.amount = 1;
         changedItem.id = 2L;
         changedItem.unit = Statics.UNIT.GRAM;
+        changedItem.produce = new Produce("Test");
 
         expectedFridge = new Fridge();
         expectedFridge.user = testUser;
@@ -72,6 +73,8 @@ public class FridgeServiceTest_EditItem {
         when(fridgeRepository.findByItemsIdAndUser_UserName(eq(testItem.id), eq(testUser.userName)))
                 .thenReturn(expectedFridge);
         when(fridgeRepository.findOne(anyLong())).thenReturn(expectedFridge);
+
+        when(itemRepository.findOne(eq(testItem.id))).thenReturn(testItem);
 
         serviceUnderTest = new FridgeService(fridgeRepository, itemRepository);
     }
@@ -85,7 +88,7 @@ public class FridgeServiceTest_EditItem {
     @Test
     public void testEditItem_Saves_New_Item() throws Exception {
         serviceUnderTest.editItem(testItem.id, testUser.userName, changedItem);
-        verify(itemRepository, times(1)).save(eq(changedItem));
+        verify(itemRepository, times(1)).save(any(Item.class));
     }
 
     @Test
