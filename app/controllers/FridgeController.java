@@ -59,4 +59,15 @@ public class FridgeController extends Controller {
     public Result listProduce() {
         return notFound();
     }
+
+    @With(UsernameValidator.class)
+    @BodyParser.Of(BodyParser.Json.class)
+    public Result editItem(final String userName, final Long id) {
+        final JsonNode node = request().body().asJson();
+        if (node == null) return badRequest("received non-valid json");
+        final Item item = fromJson(node, Item.class);
+        Fridge fridge = fridgeService.editItem(id, userName, item);
+        response().setContentType("application/json");
+        return ok(toJson(fridge));
+    }
 }
