@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET            /                                       controllers.Assets.at(path="/public", file="index.html")
+GET            /                                       controllers.Assets.at(path="/public/app", file="index.html")
 
 # recipes page
 GET            /api/v1/recipes                         controllers.RecipeController.list()
@@ -12,6 +12,7 @@ GET            /api/v1/recipes                         controllers.RecipeControl
 GET            /api/v1/:userId/fridge                  @controllers.FridgeController.fridge(userId)
 POST           /api/v1/:userId/fridge/items            @controllers.FridgeController.addItem(userId)
 GET            /api/v1/:userId/fridge/items/:id        @controllers.FridgeController.showItem(userId, id)
+PUT            /api/v1/:userId/fridge/items/:id        @controllers.FridgeController.editItem(userId, id: Long)
 
 GET            /api/v1/user/:userName                  @controllers.UserController.profile(userName)
 
