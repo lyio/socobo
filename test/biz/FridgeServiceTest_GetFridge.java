@@ -2,6 +2,7 @@ package biz;
 
 import biz.fridge.FridgeService;
 import datalayer.FridgeRepository;
+import datalayer.ItemRepository;
 import datalayer.UserRepository;
 import models.fridge.Fridge;
 import models.fridge.Item;
@@ -16,9 +17,7 @@ import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class FridgeServiceTest_GetFridge {
 
@@ -27,6 +26,9 @@ public class FridgeServiceTest_GetFridge {
 
     @Mock
     UserRepository userRepository;
+
+    @Mock
+    ItemRepository itemRepository;
 
     FridgeService serviceUnderTest;
 
@@ -52,7 +54,7 @@ public class FridgeServiceTest_GetFridge {
 
         when(fridgeRepository.findByUserUserName(eq(testUser.userName))).thenReturn(expectedFridge);
 
-        serviceUnderTest = new FridgeService(fridgeRepository);
+        serviceUnderTest = new FridgeService(fridgeRepository, itemRepository);
         actualResult = serviceUnderTest.getFridgeForUser(testUser.userName);
     }
 

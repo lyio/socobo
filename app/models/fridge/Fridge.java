@@ -1,5 +1,6 @@
 package models.fridge;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.user.User;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ public class Fridge {
     @GeneratedValue
     public Long id;
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.REMOVE)
     public User user;
 
