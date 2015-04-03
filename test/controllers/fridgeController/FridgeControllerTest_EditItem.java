@@ -28,6 +28,7 @@ import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.*;
+import static play.mvc.Http.Status.NO_CONTENT;
 import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.contentType;
 import static play.test.Helpers.status;
@@ -69,7 +70,7 @@ public class FridgeControllerTest_EditItem extends ControllerTestBase {
         final Fridge expectedFridge = new Fridge(new User(testUser), fridgeItems);
         expectedFridge.items.add(testItem);
         when(fridgeRepository.findByUserUserName(testUser)).thenReturn(expectedFridge);
-        when(fridgeService.editItem(eq(testItem.id), eq(testUser), any(Item.class))).thenReturn(expectedFridge);
+        when(fridgeService.editItem(eq(testItem.id), eq(testUser), any(Item.class))).thenReturn(testItem);
 
         final Http.Context mockContext = getMockContext(new ObjectMapper().writeValueAsString(testItem));
         when(mockContext.request().username()).thenReturn(testUser);
@@ -82,10 +83,9 @@ public class FridgeControllerTest_EditItem extends ControllerTestBase {
     }
 
     @Test
-    public void testEditItem_Should_Return_OK_And_Json() throws Exception {
+    public void testEditItem_Should_Return_204_And_Json() throws Exception {
         assertThat(fridgeResult).isNotNull();
-        assertThat(status(fridgeResult)).isEqualTo(OK);
-        assertThat(contentType(fridgeResult)).isEqualTo("application/json");
+        assertThat(status(fridgeResult)).isEqualTo(NO_CONTENT);
     }
 
     @Test

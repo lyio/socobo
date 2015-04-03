@@ -36,13 +36,14 @@ public class FridgeServiceTest_EditItem {
 
     private User testUser;
 
-    private Fridge actualResult;
+    private Item actualResult;
 
     private Fridge expectedFridge;
 
     private Item testItem;
 
     private ArrayList<Item> expectedItems;
+
     private Item changedItem;
 
     @Before
@@ -72,8 +73,6 @@ public class FridgeServiceTest_EditItem {
 
         when(fridgeRepository.findByItemsIdAndUser_UserName(eq(testItem.id), eq(testUser.userName)))
                 .thenReturn(expectedFridge);
-        when(fridgeRepository.findOne(anyLong())).thenReturn(expectedFridge);
-
         when(itemRepository.findOne(eq(testItem.id))).thenReturn(testItem);
 
         serviceUnderTest = new FridgeService(fridgeRepository, itemRepository);
@@ -92,9 +91,9 @@ public class FridgeServiceTest_EditItem {
     }
 
     @Test
-    public void testEditItem_Calls_FridgeRepository_Find_Fridge_Once() throws Exception {
+    public void testEditItem_Calls_FridgeRepository_Find_Fridge_Never() throws Exception {
         serviceUnderTest.editItem(testItem.id, testUser.userName, changedItem);
-        verify(fridgeRepository, times(1)).findOne(anyLong());
+        verify(fridgeRepository, never()).findOne(anyLong());
     }
 
     @Test

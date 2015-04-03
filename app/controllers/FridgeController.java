@@ -66,8 +66,7 @@ public class FridgeController extends Controller {
         final JsonNode node = request().body().asJson();
         if (node == null) return badRequest("received non-valid json");
         final Item item = fromJson(node, Item.class);
-        Fridge fridge = fridgeService.editItem(id, userName, item);
-        response().setContentType("application/json");
-        return ok(toJson(fridge));
+        fridgeService.editItem(id, userName, item);
+        return noContent();
     }
 }
