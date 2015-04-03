@@ -47,12 +47,19 @@ public class FridgeService {
     }
 
     public Item editItem(final Long id, final String userName, Item changedItem) {
-        final Fridge f = fridgeRepository.findByItemsIdAndUser_UserName(id, userName);
         final Item originalItem = itemRepository.findOne(changedItem.id);
-        if (f != null && originalItem != null && Objects.equals(changedItem.produce.name, originalItem.produce.name)) {
+        if (isItemInUsersFridge(id, userName) && originalItem != null && Objects.equals(changedItem.produce.name, originalItem.produce.name)) {
             changedItem.lastUpdatedAt = DateTime.now().getMillis();
             return itemRepository.save(changedItem);
         }
         return null;
+    }
+
+    public Item retrieveItem(Long id, String userName) {
+        return isItemInUsersFridge(id, userName) ? itemRepository.findOne(id) : null;
+    }
+
+    private boolean isItemInUsersFridge(Long id, String userName) {
+        return fridgeRepository.findByItemsIdAndUser_UserName(id, userName) != null;
     }
 }
