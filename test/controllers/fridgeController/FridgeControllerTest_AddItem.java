@@ -74,6 +74,7 @@ public class FridgeControllerTest_AddItem extends ControllerTestBase {
         mockContext.args = new HashMap<>();
         mockContext.args.put("user", new User(testUser));
         Http.Context.current.set(mockContext);
+
         fridgeController = new FridgeController(fridgeRepository, fridgeService);
 
         fridgeResult = fridgeController.addItem(testUser);
@@ -82,16 +83,6 @@ public class FridgeControllerTest_AddItem extends ControllerTestBase {
     @Test
     public void testAddItem_Should_Call_FridgeService_Once() throws Exception {
         verify(fridgeService, times(1)).addItem(eq(testUser), any(Item.class));
-    }
-
-    @Test
-    public void testAddItem_Returns_Unauthorized_For_Wrong_User() throws Exception {
-        Http.Context.current.set(mock(Http.Context.class));
-        Result result = callAction(
-                controllers.routes.ref.FridgeController.addItem(testUser),
-                fakeRequest()
-        );
-        assertThat(status(result)).isEqualTo(UNAUTHORIZED);
     }
 
     @Test
