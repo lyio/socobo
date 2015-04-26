@@ -15,7 +15,5 @@ dist
 /.settings
 
 # frontend
-public/bower_components
 /node_modules
-/public
 /frontend
