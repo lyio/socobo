@@ -1,0 +1,3 @@
+[submodule "public"]
+	path = public
+	url = https://github.com/flashback2k14/socobo-frontend.git
