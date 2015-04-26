@@ -29,8 +29,6 @@ import java.util.List;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static play.mvc.Http.Status.NO_CONTENT;
-import static play.mvc.Http.Status.OK;
-import static play.test.Helpers.contentType;
 import static play.test.Helpers.status;
 
 @RunWith(MockitoJUnitRunner.class)
