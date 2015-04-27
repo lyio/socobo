@@ -28,11 +28,11 @@ import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static play.mvc.Http.Status.OK;
-import static play.test.Helpers.*;
+import static play.mvc.Http.Status.NO_CONTENT;
+import static play.test.Helpers.status;
 
 @RunWith(MockitoJUnitRunner.class)
-public class FridgeControllerTest_AddItem extends ControllerTestBase {
+public class FridgeControllerTest_EditItem extends ControllerTestBase {
 
     private final String testUser = "test";
 
@@ -61,40 +61,33 @@ public class FridgeControllerTest_AddItem extends ControllerTestBase {
         MockitoAnnotations.initMocks(this);
 
         testItem = new Item();
+        testItem.id = 1L;
         testItem.produce = new Produce("Test");
         testItem.amount = 2;
         testItem.unit = Statics.UNIT.PIECE;
         final Fridge expectedFridge = new Fridge(new User(testUser), fridgeItems);
         expectedFridge.items.add(testItem);
         when(fridgeRepository.findByUserUserName(testUser)).thenReturn(expectedFridge);
-        when(fridgeService.addItem(eq(testUser), any(Item.class))).thenReturn(expectedFridge);
+        when(fridgeService.editItem(eq(testItem.id), eq(testUser), any(Item.class))).thenReturn(testItem);
 
         final Http.Context mockContext = getMockContext(new ObjectMapper().writeValueAsString(testItem));
         when(mockContext.request().username()).thenReturn(testUser);
         mockContext.args = new HashMap<>();
         mockContext.args.put("user", new User(testUser));
         Http.Context.current.set(mockContext);
-
         fridgeController = new FridgeController(fridgeRepository, fridgeService);
 
-        fridgeResult = fridgeController.addItem(testUser);
+        fridgeResult = fridgeController.editItem(testUser, testItem.id);
     }
 
     @Test
-    public void testAddItem_Should_Call_FridgeService_Once() throws Exception {
-        verify(fridgeService, times(1)).addItem(eq(testUser), any(Item.class));
-    }
-
-    @Test
-    public void testAddItem_Should_Return_OK_And_Json() throws Exception {
+    public void testEditItem_Should_Return_204_And_Json() throws Exception {
         assertThat(fridgeResult).isNotNull();
-        assertThat(status(fridgeResult)).isEqualTo(OK);
-        assertThat(contentType(fridgeResult)).isEqualTo("application/json");
+        assertThat(status(fridgeResult)).isEqualTo(NO_CONTENT);
     }
 
     @Test
-    public void testAddItem_Should_Reject_Request_For_Wrong_User() throws Exception {
-        fridgeResult = fridgeController.addItem("someName");
-        assertThat(status(fridgeResult)).isEqualTo(FORBIDDEN);
+    public void testEditItem_Should_Call_FridgeService_Once() throws Exception {
+        verify(fridgeService, times(1)).editItem(eq(testItem.id), eq(testUser), any(Item.class));
     }
 }

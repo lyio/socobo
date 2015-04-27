@@ -2,6 +2,7 @@ package biz;
 
 import biz.fridge.FridgeService;
 import datalayer.FridgeRepository;
+import datalayer.ItemRepository;
 import datalayer.UserRepository;
 import models.fridge.Fridge;
 import models.fridge.Item;
@@ -26,8 +27,12 @@ public class FridgeServiceTest_AddItem {
 
     @Mock
     FridgeRepository fridgeRepository;
+
     @Mock
     UserRepository userRepository;
+
+    @Mock
+    ItemRepository itemRepository;
 
     FridgeService serviceUnderTest;
 
@@ -68,7 +73,7 @@ public class FridgeServiceTest_AddItem {
 
         when(fridgeRepository.findByUserUserName(eq(testUser.userName))).thenReturn(expectedFridge);
 
-        serviceUnderTest = new FridgeService(fridgeRepository);
+        serviceUnderTest = new FridgeService(fridgeRepository, itemRepository);
 
     }
 

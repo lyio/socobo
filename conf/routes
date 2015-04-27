@@ -11,7 +11,8 @@ GET            /api/v1/recipes                         controllers.RecipeControl
 # @controllers notation works with non-static controllers
 GET            /api/v1/:userId/fridge                  @controllers.FridgeController.fridge(userId)
 POST           /api/v1/:userId/fridge/items            @controllers.FridgeController.addItem(userId)
-GET            /api/v1/:userId/fridge/items/:id        @controllers.FridgeController.showItem(userId, id)
+GET            /api/v1/:userId/fridge/items/:id        @controllers.FridgeController.showItem(id: Long, userId)
+PUT            /api/v1/:userId/fridge/items/:id        @controllers.FridgeController.editItem(userId, id: Long)
 
 GET            /api/v1/user/:userName                  @controllers.UserController.profile(userName)
 

@@ -30,8 +30,10 @@ public class FridgeController extends Controller {
         this.fridgeService = fridgeService;
     }
 
-    public Result showItem(String userId, String id) {
-        return play.mvc.Results.TODO;
+    @With(UsernameValidator.class)
+    public Result showItem(Long id, String userId) {
+        Item item = fridgeService.retrieveItem(id, userId);
+        return item != null ? ok(toJson(item)) : notFound("No such Item in fridge");
     }
 
 
@@ -41,6 +43,7 @@ public class FridgeController extends Controller {
         return fridge != null ? ok(toJson(fridge)) : notFound("No fridge found for this user");
     }
 
+    @With(UsernameValidator.class)
     @BodyParser.Of(BodyParser.Json.class)
     public Result addItem(final String userName) {
         if (!userName.equals(request().username())) {
@@ -58,5 +61,15 @@ public class FridgeController extends Controller {
 
     public Result listProduce() {
         return notFound();
+    }
+
+    @With(UsernameValidator.class)
+    @BodyParser.Of(BodyParser.Json.class)
+    public Result editItem(final String userName, final Long id) {
+        final JsonNode node = request().body().asJson();
+        if (node == null) return badRequest("received non-valid json");
+        final Item item = fromJson(node, Item.class);
+        fridgeService.editItem(id, userName, item);
+        return noContent();
     }
 }
