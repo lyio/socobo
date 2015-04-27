@@ -1,20 +1,16 @@
 {
-  "name": "module-name",
-  "version": "0.0.1",
-  "description": "An example module to illustrate the usage of a package.json",
+  "name": "socobo-frontend-deployment",
+  "version": "0.0.2",
+  "description": "Takes care of installing bower and pulling frontend dependencies.",
   "author": "lyio",
   "dependencies": {
-    "bower": "*",
-    "grunt-cli": "^0.1.13",
-    "grunt": "^0.4.5",
-    "grunt-bowercopy": "^1.2.0",
-    "grunt-cdnify": "^0.1.1"
+    "bower": "*"
   },
   "scripts": {
-    "postinstall": "grunt release"
+    "postinstall": "cd public && bower install"
   },
   "engines": {
-    "node": "0.10.x"
+    "node": "0.12.x"
   },
   "preferGlobal": true,
   "private": true
