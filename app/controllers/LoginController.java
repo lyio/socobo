@@ -37,7 +37,7 @@ public class LoginController extends Controller {
 
         Login login = loginForm.get();
 
-        final User user = userService.findByEmailAddressAndPassword(login.emailAddress, login.password);
+        final User user = userService.findByEmailAddressAndPassword(login.email, login.password);
 
         if (user == null) {
             return unauthorized("email and password combination not found");
