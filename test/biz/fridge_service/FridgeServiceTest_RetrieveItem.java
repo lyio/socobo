@@ -1,4 +1,4 @@
-package biz;
+package biz.fridge_service;
 
 import biz.fridge.FridgeService;
 import datalayer.FridgeRepository;

@@ -1,5 +1,6 @@
 package models.recipes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.recipes.statics.Statics;
 import models.user.User;
 import org.joda.time.DateTime;
@@ -7,6 +8,7 @@ import play.data.validation.Constraints;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public final class Recipe {
@@ -37,7 +39,7 @@ public final class Recipe {
 
     @Constraints.Required
     @Column(length = 288, nullable = false)
-    public DateTime creationDate;
+    public DateTime createdAt;
 
     @Constraints.Required
     public int preparationTimeInMinutes;
@@ -47,10 +49,31 @@ public final class Recipe {
     @Constraints.Required
     public int skillRequired;
 
+    @JsonIgnore
     @Constraints.Required
     @ManyToOne
+    @Column(nullable = false)
     public User owner;
 
-    public Recipe() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Recipe recipe = (Recipe) o;
+        return Objects.equals(preparationTimeInMinutes, recipe.preparationTimeInMinutes) &&
+                Objects.equals(skillRequired, recipe.skillRequired) &&
+                Objects.equals(id, recipe.id) &&
+                Objects.equals(name, recipe.name) &&
+                Objects.equals(ingredients, recipe.ingredients) &&
+                Objects.equals(instructions, recipe.instructions) &&
+                Objects.equals(categories, recipe.categories) &&
+                Objects.equals(pictureUrl, recipe.pictureUrl) &&
+                Objects.equals(createdAt, recipe.createdAt) &&
+                Objects.equals(owner, recipe.owner);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, ingredients, instructions, categories, pictureUrl, createdAt, preparationTimeInMinutes, skillRequired, owner);
     }
 }

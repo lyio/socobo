@@ -1,5 +1,6 @@
-package biz;
+package biz.user_service;
 
+import biz.LambdaMatcher;
 import biz.fridge.FridgeService;
 import biz.user.UserService;
 import datalayer.UserRepository;
@@ -44,7 +45,9 @@ public class UserServiceTest {
     @Test
     public void testCreateUser_Calls_Save_of_UserRepository_Once() throws Exception {
         serviceUnderTest.createUser(testUser).get(500);
-        verify(userRepository, times(1)).save(argThat(new UserMatcher()));
+        verify(userRepository, times(1)).save(LambdaMatcher.argThat(
+                (User u) -> testUser.userName.equals(u.userName),
+                "Username of saved user should be the same as the one passed in"));
     }
 
     @Test
@@ -65,18 +68,5 @@ public class UserServiceTest {
     public void testCreateUser_Creates_Empty_Fridge() throws Exception {
         final User u = serviceUnderTest.createUser(testUser).get(500);
         verify(fridgeService, times(1)).createFridgeForUser(any(User.class));
-    }
-
-    public class UserMatcher extends ArgumentMatcher<User> {
-
-        @Override
-        public boolean matches(Object argument) {
-            boolean matches = false;
-            if (argument instanceof User) {
-                final User user = (User) argument;
-                matches = testUser.userName.equals(user.userName);
-            }
-            return matches;
-        }
     }
 }
