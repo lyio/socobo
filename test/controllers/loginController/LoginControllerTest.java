@@ -44,7 +44,7 @@ public class LoginControllerTest extends ControllerTestBase {
 
         when(authenticator.getUsername(any(Http.Context.class))).thenReturn(null);
         when(userService.createUser(any(User.class))).thenReturn(F.Promise.promise(() -> testUser));
-        Http.Context.current.set(getMockContext("{\"password\": \"password1\", \"emailAddress\": \"lyio@socobo.com\"}"));
+        Http.Context.current.set(getMockContext("{\"password\": \"password1\", \"email\": \"lyio@socobo.com\"}"));
         controllerUnderTest = new LoginController(userService);
     }
 

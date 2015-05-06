@@ -6,7 +6,7 @@ public class Login {
 
             @Constraints.Required
             @Constraints.Email
-            public String emailAddress;
+            public String email;
 
             @Constraints.Required
             public String password;
