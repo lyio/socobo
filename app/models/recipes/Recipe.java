@@ -21,7 +21,7 @@ public final class Recipe {
     @Constraints.Required
     public String name;
 
-    @Column(nullable = false)
+    @Constraints.Required
     @OneToMany(cascade = CascadeType.ALL)
     public List<Ingredient> ingredients;
 
@@ -52,7 +52,6 @@ public final class Recipe {
     @JsonIgnore
     @Constraints.Required
     @ManyToOne
-    @Column(nullable = false)
     public User owner;
 
     @Override
