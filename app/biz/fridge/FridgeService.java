@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 @Named
@@ -61,5 +62,17 @@ public class FridgeService {
 
     private boolean isItemInUsersFridge(Long id, String userName) {
         return fridgeRepository.findByItemsIdAndUser_UserName(id, userName) != null;
+    }
+
+    public Fridge removeItem(Long id, String userName){
+        Fridge fridge = getFridgeForUser(userName);
+        try {
+            Item searchedItem = fridge.items.stream().filter(item -> id.equals(item.id)).findFirst().get();
+            fridge.items.remove(searchedItem);
+            fridgeRepository.save(fridge);
+        }catch(NoSuchElementException e) {
+            throw new IllegalArgumentException("Wrong item id: " + id + "! The item defined by the assigned id has to be in the Fridge, but couldn't be found");
+        }
+        return fridge;
     }
 }

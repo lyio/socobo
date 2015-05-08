@@ -13,6 +13,7 @@ GET            /api/v1/:userId/fridge                  @controllers.FridgeContro
 POST           /api/v1/:userId/fridge/items            @controllers.FridgeController.addItem(userId)
 GET            /api/v1/:userId/fridge/items/:id        @controllers.FridgeController.showItem(id: Long, userId)
 PUT            /api/v1/:userId/fridge/items/:id        @controllers.FridgeController.editItem(userId, id: Long)
+DELETE         /api/v1/:userId/fridge/items/:id        @controllers.FridgeController.removeItem(userId, id: Long)
 
 GET            /api/v1/user/:userName                  @controllers.UserController.profile(userName)
 

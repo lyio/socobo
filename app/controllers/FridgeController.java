@@ -72,4 +72,16 @@ public class FridgeController extends Controller {
         fridgeService.editItem(id, userName, item);
         return noContent();
     }
+
+    @With(UsernameValidator.class)
+    public Result removeItem(final String userName, final Long itemId){
+        Fridge fridge;
+        try {
+            fridge = fridgeService.removeItem(itemId, userName);
+        }catch (IllegalArgumentException e){
+            return notFound("Item with id " + itemId + " does not exist!");
+        }
+        response().setContentType("application/json; charset=UTF-8");
+        return ok(toJson(fridge));
+    }
 }
