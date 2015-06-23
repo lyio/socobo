@@ -4,13 +4,23 @@ package controllers;
 import biz.fridge.FridgeService;
 import com.fasterxml.jackson.databind.JsonNode;
 import datalayer.FridgeRepository;
+
 import models.fridge.Fridge;
 import models.fridge.Item;
 import play.mvc.*;
 
+import play.libs.Json;
+import play.mvc.BodyParser;
+import play.mvc.Controller;
+import play.mvc.Result;
+
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+
+import java.util.List;
+
 
 import static play.libs.Json.fromJson;
 import static play.libs.Json.toJson;
@@ -57,6 +67,24 @@ public class FridgeController extends Controller {
         response().setContentType("application/json");
 
         return ok(toJson(fridgeService.addItem(userName, item)));
+    }
+
+    /**
+     * Method to remove on item from the fridge using the username and the id
+     * of the item
+     *
+     * @param user User who want remove a item from the fridge
+     * @param id Unique number of the item to identify it in the database
+     * @return Result object including the updated fridge object as json
+     */
+    public Result removeItemFromFridge(final String user, final int id) {
+        Fridge fridge = fridgeRepository.findByUserUserName(user);
+        if (fridge == null) return notFound("No fridge found for this user");
+        List<Item> items = fridge.items;
+        items.remove(id);
+        fridgeRepository.save(fridge);
+        JsonNode fridgeAsJson = Json.toJson(fridge);
+        return ok(fridgeAsJson).as("application/json");
     }
 
     public Result listProduce() {
