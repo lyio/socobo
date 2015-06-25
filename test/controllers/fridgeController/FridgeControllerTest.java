@@ -3,12 +3,14 @@ package controllers.fridgeController;
 import biz.fridge.FridgeService;
 import controllers.ControllerTestBase;
 import controllers.FridgeController;
+
 import controllers.UsernameValidator;
 import datalayer.FridgeRepository;
 import models.fridge.Fridge;
 import models.fridge.Item;
 import models.user.User;
 import org.fest.util.VisibleForTesting;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -88,4 +90,5 @@ public class FridgeControllerTest extends ControllerTestBase {
         assertThat(contentAsString(fridgeResult)).contains("id");
         assertThat(contentAsString(fridgeResult)).contains("items");
     }
+
 }

@@ -18,7 +18,7 @@ public class Fridge {
     @OneToOne(cascade = CascadeType.REMOVE)
     public User user;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     public List<Item> items;
 
     @Column(nullable = false)
