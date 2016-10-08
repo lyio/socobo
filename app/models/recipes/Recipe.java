@@ -1,15 +1,16 @@
 package models.recipes;
 
-import models.recipes.statics.Statics;
+import com.avaje.ebean.Model;
 import models.user.User;
-import org.joda.time.DateTime;
+import play.data.format.Formats;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-public final class Recipe {
+public final class Recipe extends Model {
 
     @Id
     @GeneratedValue
@@ -29,15 +30,15 @@ public final class Recipe {
 
     @Constraints.Required
     @ElementCollection
-    public List<Statics.RECIPE_CATEGORY> categories;
+    public List<RecipeCategory> categories;
 
     @Constraints.Required
     @Column(nullable = false)
     public String pictureUrl;
 
     @Constraints.Required
-    @Column(length = 288, nullable = false)
-    public DateTime creationDate;
+    @Formats.DateTime(pattern="dd/MM/yyyy")
+    public Date creationDate;
 
     @Constraints.Required
     public int preparationTimeInMinutes;

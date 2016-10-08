@@ -1,5 +1,6 @@
-import play.Play.autoImport._
-import play.PlayImport.PlayKeys._
+import play.ebean.sbt.PlayEbean
+import play.sbt.Play.autoImport._
+import play.sbt.PlayJava
 import sbt.Keys._
 import sbt._
 
@@ -10,19 +11,12 @@ object ApplicationBuild extends Build {
 
   val appDependencies = Seq(
     // Add your project dependencies here,
-    "mysql" % "mysql-connector-java" % "5.1.34",
-    "org.springframework" % "spring-context" % "3.2.2.RELEASE",
     "javax.inject" % "javax.inject" % "1",
-    "org.springframework.data" % "spring-data-jpa" % "1.3.2.RELEASE",
-    "org.springframework" % "spring-expression" % "3.2.2.RELEASE",
-    "org.hibernate" % "hibernate-entitymanager" % "3.6.10.Final",
     "org.mockito" % "mockito-core" % "1.9.5" % "test",
-    "org.webjars" % "bootstrap" % "3.0.0",
     "postgresql" % "postgresql" % "9.1-901.jdbc4"
   )
-  val main = Project(appName, file(".")).enablePlugins(play.PlayJava).settings(
-    playVersion := appVersion,
+  val main = Project(appName, file(".")).enablePlugins(PlayJava, PlayEbean).settings(
     libraryDependencies ++= appDependencies,
-    javacOptions in Compile ++= Seq("-source", "1.8", "-target", "1.8")
+    libraryDependencies += evolutions
   )
 }

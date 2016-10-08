@@ -1,5 +1,6 @@
 package models.recipes;
 
+import com.avaje.ebean.Model;
 import models.recipes.statics.Statics;
 
 import javax.persistence.Column;
@@ -8,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Amount {
+public class Amount extends Model {
 
     @Id
     @GeneratedValue
