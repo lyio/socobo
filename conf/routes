@@ -3,26 +3,15 @@
 # ~~~~
 
 # Home page
-GET            /                                       controllers.Assets.at(path="/public/app", file="index.html")
+GET            /                                       controllers.Application.home
 
 # recipes page
-GET            /api/v1/recipes                         controllers.RecipeController.list()
+GET            /api/v1/u/:userId/recipes                         controllers.RecipeController.list(userId: Long)
+GET            /api/v1/u/:userId/recipes/:recipeId               controllers.RecipeController.show(userId: Long, recipeId: Long)
+
+POST          /api/v1/u/:userId/recipes/                         controllers.RecipeController.save(userId: Long)
 
 # @controllers notation works with non-static controllers
-GET            /api/v1/:userId/fridge                  @controllers.FridgeController.fridge(userId)
-POST           /api/v1/:userId/fridge/items            @controllers.FridgeController.addItem(userId)
-GET            /api/v1/:userId/fridge/items/:id        @controllers.FridgeController.showItem(id: Long, userId)
-PUT            /api/v1/:userId/fridge/items/:id        @controllers.FridgeController.editItem(userId, id: Long)
-DELETE         /api/v1/:userId/fridge/items/:id        @controllers.FridgeController.removeItem(userId, id: Long)
-
-GET            /api/v1/user/:userName                  @controllers.UserController.profile(userName)
-
-GET            /api/v1/produce                         @controllers.FridgeController.listProduce()
-
-POST           /login                                  @controllers.LoginController.handleLogin()
-POST           /logout                                 @controllers.LoginController.logout()
-
-POST           /signup                                 @controllers.UserController.createUser()
 
 # Map static resources from the /public folder to the /assets URL path
 GET            /assets/*file                           controllers.Assets.at(path="/public", file)
@@ -34,4 +23,4 @@ GET            /styles/*file                           controllers.Assets.at(pat
 GET            /bower_components/*file                 controllers.Assets.at(path="/public/bower_components", file)
 
 
-OPTIONS        /*path                                  controllers.Application.preflight(path)
+OPTIONS        /*path                                  controllers.Application.preflight(path: String)

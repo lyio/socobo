@@ -4,7 +4,7 @@
 ##													   ##
 #########################################################
 
-Goal:		Define needed fields and there names
+Goal:		Define needed fields and their names
 Author: 	flashback2k14
 Date: 		25.01.2015
 Version: 	1.0
