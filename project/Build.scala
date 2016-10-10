@@ -13,7 +13,7 @@ object ApplicationBuild extends Build {
     // Add your project dependencies here,
     "javax.inject" % "javax.inject" % "1",
     "org.mockito" % "mockito-core" % "1.9.5" % "test",
-    "postgresql" % "postgresql" % "9.1-901.jdbc4"
+    "org.postgresql" % "postgresql" % "9.4.1211"
   )
   val main = Project(appName, file(".")).enablePlugins(PlayJava, PlayEbean).settings(
     libraryDependencies ++= appDependencies,
