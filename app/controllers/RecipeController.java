@@ -1,8 +1,8 @@
 package controllers;
 
+import business.RecipeService;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import datalayer.RecipeRepository;
 import models.recipes.Recipe;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
@@ -16,31 +16,34 @@ import static play.libs.Json.toJson;
 @Singleton
 public class RecipeController extends Controller {
 
-    private final RecipeRepository recipeRepository;
+    private final RecipeService recipeService;
 
     @Inject
-    public RecipeController(RecipeRepository recipeRepository) {
-        this.recipeRepository = recipeRepository;
+    public RecipeController(RecipeService recipeService) {
+        this.recipeService = recipeService;
     }
 
     /**
      * Renders list of recipes as json
      * @return
      */
-    public Result list(long userId) {
-        return ok(toJson(recipeRepository.findAllByOwner(userId)));
+    public Result list() {
+        long userId = 0;
+        return ok(toJson(recipeService.findAllByOwner(userId)));
     }
 
-    public Result show(long userId, long recipeId) {
+    public Result show(long recipeId) {
 
-        final Optional<Recipe> maybeRecipe = recipeRepository.findByOwnerAndId(userId, recipeId);
+        long userId = 0;
+        final Optional<Recipe> maybeRecipe = recipeService.findSingleRecipe(userId, recipeId);
         return maybeRecipe.isPresent() ? ok(toJson(maybeRecipe.get())) : notFound();
     }
 
     @BodyParser.Of(BodyParser.Json.class)
-    public Result save(Long userId) {
+    public Result create() {
+        long userId = 0;
         Recipe r = fromJson(request().body().asJson(), Recipe.class);
 
-        return created(toJson(recipeRepository.save(r)));
+        return created(toJson(recipeService.createRecipe(r)));
     }
 }

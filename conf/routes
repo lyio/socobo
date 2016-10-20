@@ -5,22 +5,15 @@
 # Home page
 GET            /                                       controllers.Application.home
 
-# recipes page
-GET            /api/v1/u/:userId/recipes                         controllers.RecipeController.list(userId: Long)
-GET            /api/v1/u/:userId/recipes/:recipeId               controllers.RecipeController.show(userId: Long, recipeId: Long)
+# recipes endpoint
+GET            /api/v1/recipes                         controllers.RecipeController.list
+GET            /api/v1/recipes/:recipeId               controllers.RecipeController.show(recipeId: Long)
 
-POST          /api/v1/u/:userId/recipes/                         controllers.RecipeController.save(userId: Long)
+POST           /api/v1/recipes/                        controllers.RecipeController.create
 
 # @controllers notation works with non-static controllers
 
 # Map static resources from the /public folder to the /assets URL path
 GET            /assets/*file                           controllers.Assets.at(path="/public", file)
-GET            /images/*file                           controllers.Assets.at(path="/public/app/images", file)
-GET            /elements/*file                         controllers.Assets.at(path="/public/app/elements", file)
-GET            /manifests/*file                        controllers.Assets.at(path="/public/app/manifests", file)
-GET            /scripts/*file                          controllers.Assets.at(path="/public/app/scripts", file)
-GET            /styles/*file                           controllers.Assets.at(path="/public/app/styles", file)
-GET            /bower_components/*file                 controllers.Assets.at(path="/public/bower_components", file)
-
 
 OPTIONS        /*path                                  controllers.Application.preflight(path: String)
