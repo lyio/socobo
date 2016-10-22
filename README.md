@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/lyio/socobo.svg?branch=master)](https://travis-ci.org/lyio/socobo)
+[![Build Status](https://travis-ci.org/socobo/socobo-play.svg?branch=master)](https://travis-ci.org/socobo/socobo-play)
 
 This is your new Play application
 =====================================
